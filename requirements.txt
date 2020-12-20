@@ -1,0 +1,6 @@
+flask==1.0.1
+dj-database-url==0.5.0
+gunicorn==20.0.4
+soylemma==0.2.0
+korean==0.1.8
+mecab-python3==1.0.3

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block morehead %}
+    <style>
+    /*
+    Credit for interlinear css to:
+    https://linguistics.stackexchange.com/questions/3/how-do-i-format-an-interlinear-gloss-for-html
+    http://jsfiddle.net/snifty/Ty8Vp/2/
+    */
+
+    ol,ul{
+        list-style:none;
+    }
+
+    ol.sentence {
+        display:inline;
+    }
+
+    ol.sentence li[lang=es]{
+        font-weight:bold;
+        font-size: 20px;
+    }
+
+    ol.sentence li[lang=en_MORPH]{
+        
+        padding-top: 3px;
+        padding-bottom: 3px;
+        font-size: 10px;
+        color:#aaa;
+    }
+
+    ol.word {
+        padding: .5em;
+        margin-bottom: .5em;
+        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        float:left;
+        border: 1px dotted #ddd;
+        display: inline-block;
+        height: 6em;
+    }
+
+    ol.comment {
+        padding: .5em;
+        margin-bottom: .5em;
+        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        float:left;
+        border: 1px dotted #ccc;
+        display: inline-block;
+    }
+
+    
+    div,span{
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Credit for tooltip css to: https://www.w3schools.com/css/css_tooltip.asp https://www.w3schools.com/howto/howto_js_popup.asp*/
+        
+    
+    /* Tooltip container */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    /*border-bottom: 1px dotted black; If you want dots under the hoverable text */
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: {{ SuperClass_Colours["Tooltip"]|safe }};
+        color: {{ SuperClass_Colours["Noun"]|safe }};
+        text-align: left;
+        font-size: 10px;
+        padding: 5px 5px;
+        border-radius: 6px;
+        border: 1px dotted #ccc;
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip .tooltiptext {
+    top: -5px;
+    left: 105%;
+    }
+
+    .tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 12px;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent hsla(0, 0%, 80%, 50) transparent transparent;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    /*
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+    */
+    
+    /* Toggle this class when clicking on the popup container (hide and show the popup) */
+    .tooltip .show {
+        visibility: visible;
+    }
+    
+    a.diclink {
+        text-decoration: none;
+        color: {{ SuperClass_Colours["Noun"]|safe }};
+    }
+
+    a.translink {
+        text-decoration: none;
+        font-weight: normal;
+        color: {{ SuperClass_Colours["Noun"]|safe }};
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div onclick="closealltooltips()" style="width:105%;">
+    {{ body|safe }}
+    </div>
+{% endblock %}

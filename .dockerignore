@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+env/
+db.sqlite3
+kengdic/
+buildnotes.txt
+screenshot.jpg
+profile.txt
+migratekengdic-local.sh
+buildnotes.txt
+.git/
+.profile/

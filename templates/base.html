@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Korean-English Interlinear Generator{% endblock %}</title>
+{% endblock %}
+{% block style %}    
+    <style>
+    div,li,ol,p,pre,ul{
+        margin:0;
+        padding:0;
+    }
+
+    body {
+        font-size: 16px;
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        padding:0;
+        margin:4px;
+        background-color: {{ SuperClass_Colours["Background"]|safe }};
+    }
+
+    a{
+        color:black;
+        text-decoration:none;
+    }
+
+    a:hover{
+        text-decoration:underline;
+    }
+
+    div.wrapper {
+        padding: 2px;
+        overflow:visible;
+        margin: 1em 0;
+        clear:both;
+        font-size: 16px;
+        max-width: 1000px;
+    }
+    
+    div.wrappercomment {
+        padding: 5px;
+        overflow:visible;
+        margin: 0.5em 5px;
+        clear:both;
+        font-size: 12px;
+        width:95%;
+        max-width: 1000px;
+        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        float:left;
+        border: 1px dotted #ccc;
+        display: inline-block;
+    }
+    
+    </style>
+    
+    <script>    
+    opentooltips = [];
+    function closealltooltips() {
+        for (var i=0, len=opentooltips.length|0; i<len; i=i+1|0) {
+             //opentooltips[i].classList.remove("show");
+             opentooltips[i].style.visibility = "hidden";
+        }
+        opentooltips = [];
+    }
+    function showtooltip(event, tooltipid) {
+        closealltooltips();
+        event.stopPropagation(); 
+        element = document.getElementById(tooltipid);
+        //element.classList.toggle("show");
+        //element.style.visibility = "hidden";
+        element.style.visibility = "visible";
+        opentooltips.push(element);
+    }
+    </script>
+    
+{% endblock %}
+{% block morehead %}    
+{% endblock %}    
+</head>
+<body>
+    {% block content %}{% endblock %}
+    <br><br>
+    <div class="wrappercomment">
+        {% block footer %}
+        <p style="color:#888; font-size:10px;">Generated from user-provided content automatically by: <a style="color:#aaa" href="https://koreaninterlinear.herokuapp.com/">Korean-English Interlinear Generator</a>. Software copyright &copy;2020 by <a style="color:#aaa" href="https://github.com/danjclegg/korean-english-interlinear">Dan Clegg</a>, released under <a style="color:#aaa" href="https://github.com/danjclegg/korean-english-interlinear/blob/main/LICENSE">GNU General Public License v3.0</a>. No rights are claimed on the generated interlinear text, and some are held by package authors such as Mecab-ko, KEngDic. See source files for more. No responsibility taken for user-provided content. No liability assumed for use of this program or output, see licence at link above. By supplying content user agrees they hold appropriate copyright to do so.</p>
+        {% endblock %}
+    </div>
+    <div>
+        {% for error in errors %}
+            <h4>{{ error }}</h4>
+        {% endfor %}
+    </div>
+</body>
+</html>
