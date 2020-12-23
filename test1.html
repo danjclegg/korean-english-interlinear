@@ -1,0 +1,8 @@
+<body onunload=""><!-- This does the trick -->
+<script type="text/javascript">
+    alert('first load / reload');
+    window.onload = function(){alert('onload')};
+    window.onunload = function(){};
+</script>
+<a href="http://stackoverflow.com">click me, then press the back button</a>
+</body>

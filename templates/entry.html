@@ -38,7 +38,11 @@
 		<p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait!)"></p>
         <script>
             var butt = document.getElementById('butt');
-            butt.disabled = false;
+            
+            //butt.disabled = false;
+            
+            window.onunload = function(){};
+            
             butt.addEventListener('click', function(event) { 
                 setTimeout(function () {
                     event.target.disabled = true;

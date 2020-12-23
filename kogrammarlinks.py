@@ -17,6 +17,11 @@ class KoGrammarLinks:
             grammarlinks = json.load(f)
         self.grammarlinks = dict((y, x) for x, y in grammarlinks)
 
+        # for selecting particles in these superclasses:
+        # VerbalEnding, AuxPostposition, CaseMarker bits
+        # which in Mecab's notation comprise following codes:
+        self.particleclasses = ['EC', 'EF', 'EP', 'ETM', 'ETN', 'JC', 'JKB', 'JKC', 'JKG', 'JKO', 'JKQ', 'JKS', 'JKV', 'JX', 'XPN', 'XR', 'XSA', 'XSN', 'XSV']
+
         #supplementary list of basic particles
         self.eightdaykoreanlinks = {
             '~은 (Subject/Topic)':		'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic',
@@ -95,38 +100,29 @@ class KoGrammarLinks:
         return matches
 
 
-    def search(self, branch, nextbranch = None):
-        # input for branch and nextbranch are output elements of 
-        # list of morphemes and POS from Konlpy/Mecab
-        # example input: branch = [('“', 'SSO'), ('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
+    def search_word_method1(self, branch, nextbranch):
         # first strip symbols
         # example stripped: branch = [('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
         branch = self.get_plain_branch(branch)
         if nextbranch != None: 
             nextbranch = self.get_plain_branch(nextbranch)
-        # select any trailing chunks composed only of these
-        # superclasses:
-        # VerbalEnding, AuxPostposition, CaseMarker bits
-        # which in Mecab's notation comprise following codes:
-        particleclasses = ['EC', 'EF', 'EP', 'ETM', 'ETN', 'JC', 'JKB', 'JKC', 'JKG', 'JKO', 'JKQ', 'JKS', 'JKV', 'JX']
+            
         endings = []
         for i in reversed(range(0, len(branch))):
-            if branch[i][1] not in particleclasses:
+            if branch[i][1] not in self.particleclasses:
                 break
             endings.append(branch[i])
-        endings.reverse()
-
+        endings.reverse()    
+        
         wordcombined = "".join([e[0] for e in branch])
         endingscombined = "".join([e[0] for e in endings])
-
+        
         # try straight all together lookup
         # then try removing one char by one char from head
         for remove in range(0, (len(endingscombined) - 1) + 1):
             #print("remove:")
             #print(remove)
             endingscombinedcut = endingscombined[remove:len(endingscombined)]
-            
-            #if endingscombinedcut not in ["를", "는", "은", "을"]:
             
             # at each step, try:
             # searching for the word, optionally prepended 
@@ -188,12 +184,136 @@ class KoGrammarLinks:
 
                 #에not match
                 #정상에
-            
+
+
             grammarlinks = self.matches_search(pattern)
             #print(len(grammarlinks))
             grammarlinks.extend(self.supplementary_matches_search(suppattern))
-            #print(len(grammarlinks))
+            #print(len(grammarlinks))                    
+         
             if len(grammarlinks) > 0:
                 return grammarlinks
         return []
-    
+
+
+    def search_word_method2(self, branch, nextbranch):
+        grammarlinks = []
+
+        #go through each chunk of the branch
+        for i in range(0, len(branch)):
+            #check if chunk is particle
+            if len(branch[i]) > 1 and branch[i][1] in self.particleclasses:
+                
+                #particle we're focusing on here
+                particle = branch[i][0]
+                
+                #find prior character and final element of that char
+                if i > 0 and len(branch[i-1]) > 1 and len(branch[i-1][1]) > 0 and branch[i-1][1][0] != "S":
+                    preceeding_char = branch[i-1][0][-1]
+                    preceeding_char_final = hangul.get_final(preceeding_char)
+                else:
+                    preceeding_char = ""
+                    preceeding_char_final = ""
+                
+                #get the rest of the branch up to symbol or end
+                hit_a_symbol = False
+                last_morph_index = -1
+                if len(branch) > i + 1:
+                    for j in range(i + 1, len(branch)):
+                        #print(j)
+                        if len(branch[j]) > 1 and len(branch[j][1]) > 0 and branch[j][1][0] == "S":
+                            hit_a_symbol = True
+                            last_morph_index = j - 1
+                            break
+                        elif j == len(branch) - 1:
+                            #then hit end without finding symbol
+                            last_morph_index = j
+                            break
+                remaining_morphs = []
+                if last_morph_index >= i + 1:
+                    remaining_morphs = branch[i + 1: last_morph_index + 1]
+                remaining_morphs_text = "".join(morph[0] for morph in remaining_morphs if len(morph) > 0)
+                
+                nextmorph_text = ""
+                if not hit_a_symbol and nextbranch != None and len(nextbranch) > 0 and len(nextbranch[0]) > 0:
+                    nextmorph_text = nextbranch[0][0]
+                
+                #print("branch i; particle, preceeding_char, preceeding_char_final, hit_a_symbol, last_morph_index, remaining_morphs, nextmorph_text, nextbranch")
+                #print(str(branch) + " " + str(i) + "\t" + str(particle) + "\t" + str(preceeding_char) + "\t" + str(preceeding_char_final) + "\t" + str(hit_a_symbol) + "\t'" + str(last_morph_index) + "'\t'" + str(remaining_morphs) + "'\t'" + str(nextmorph_text) + "'\t" + str(nextbranch))
+                
+                pattern = '^\s*'
+                # pattern for supplementary links
+                suppattern = '^'
+                
+                if preceeding_char != "":
+                    pattern = pattern + '[-~]?\s*'
+                    suppattern = suppattern + '[-~]?\s*'
+                    if preceeding_char_final != '':
+                        pattern = pattern + '(?:' + re.escape(preceeding_char_final) + '\s*)?'
+                    pattern = pattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
+                    suppattern = suppattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
+
+                pattern = pattern + re.escape(particle) 
+                suppattern = suppattern + re.escape(particle) 
+                
+                if remaining_morphs_text != "":
+                    # matching remainaing_morphs
+                    pattern = pattern + '(?:\(?' + re.escape(remaining_morphs_text) + '\)?)?'
+                    suppattern = suppattern + '(?:\(?' + re.escape(remaining_morphs_text) + '\)?)?'
+                
+                # matching bracketed trailing characters 
+                pattern = pattern + '(?:\(?[만요는를은을다가서도요이]\)?)?[0-9]?(?:\s+|$)'
+                
+                # matching bracketed translations so can be separated by 
+                # whitespace at beginning here
+                suppattern = suppattern + '\s*(?:\([^\)]*\))?'
+                
+                if nextmorph_text != "":
+                    # then must also match next word 
+                    # or also any character other than a korean character
+                    pattern = pattern + '(?:' + re.escape(nextmorph_text) + '.*$|[a-zA-Z0-9].*$|\s*$)'
+                else:
+                    # then must match end as no later word
+                    pattern = pattern + '(?:[a-zA-Z0-9].*$|\s*$)'
+                suppattern = suppattern + '\s*$'
+                
+                #print(pattern)
+                #print(suppattern)
+
+                grammarlinks.extend(self.matches_search(pattern))
+                #print(len(grammarlinks))
+                grammarlinks.extend(self.supplementary_matches_search(suppattern))
+                #print(len(grammarlinks))                    
+        #print(grammarlinks)    
+        return grammarlinks
+
+    def search(self, branch, nextbranch = None):
+        # input for branch and nextbranch are output elements of 
+        # list of morphemes and POS from Konlpy/Mecab
+        # example input: branch = [('“', 'SSO'), ('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
+
+        grammarlinks = self.search_word_method2(branch, nextbranch)
+        
+        if len(grammarlinks) > 0:
+            return grammarlinks
+        
+        grammarlinks = self.search_word_method1(branch, nextbranch)
+        #if len(grammarlinks) > 0:
+            #print("*********************found grammarlinks with fallback***********************************")
+            #if branch == [('재산', 'NNG'), ('으로', 'JKB')]:
+            #    from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging
+            #print(branch)
+        
+        return grammarlinks
+
+
+
+
+
+
+
+
+
+
+
+

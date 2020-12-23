@@ -65,13 +65,20 @@
         opentooltips = [];
     }
     function showtooltip(event, tooltipid) {
-        closealltooltips();
         event.stopPropagation(); 
         element = document.getElementById(tooltipid);
-        //element.classList.toggle("show");
-        //element.style.visibility = "hidden";
-        element.style.visibility = "visible";
-        opentooltips.push(element);
+        if(element.style.visibility != "visible")
+        {
+            closealltooltips();
+            //element.classList.toggle("show");
+            //element.style.visibility = "hidden";
+            element.style.visibility = "visible";
+            opentooltips.push(element);
+        }
+        else
+        {
+            closealltooltips();
+        }
     }
     </script>
     

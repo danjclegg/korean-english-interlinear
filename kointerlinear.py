@@ -162,7 +162,6 @@ class KoInterlinear:
         rows = self.cur.fetchall()
 
         if type(rows) is list and len(rows) > 0:
-            print("Found results &&&&&&&&&&&&&&&&&&&&&&&")
             return_rows = [" ".join([row[0], row[1]])
                             for row in rows if row is not None and row[1] is not None and row[1] != ""]
             return return_rows
@@ -510,54 +509,63 @@ class KoInterlinear:
         phrase_translations = self.fetch_phrase_translations(plain_word, self.get_plain_word(nextbranch), self.get_plain_word(nextnextbranch))
         
         if len(phrase_translations) > 0:
-            print("+++++++++++phrases:")
-            print(phrase_translations)
-            phrase_translations_html = (hr + '<p style="margin-top: .5em;color:' + sejongtagset.SuperClass_Colours['Verb'] + '">' + html.escape(";\n".join(phrase_translations)) + '</p>')
+            phrase_translations_html = (hr + '<p style="margin-top: .5em;font-weight:bold;color:' + sejongtagset.SuperClass_Colours['Noun'] + '">' + html.escape(";\n".join(phrase_translations)) + '</p>')
         else:
             phrase_translations_html = ''
 
         total_lines_remain = 4
-        tshort = ""        
-        self.wrapper.width = full_word_length*3 if full_word_length > 1 else 2*3
+        
+        self.wrapper.width = round(full_word_length*3.5) if full_word_length > 1 else 2*3
         
         if len(phrase_translations) > 0:
-            tshort_t = ";\n".join(translations)
+            tshort_t = ";\n".join(phrase_translations)
             self.wrapper.max_lines = 2
-            tshort = (tshort 
-                      + '<p style="margin-top: .5em;color:' + sejongtagset.SuperClass_Colours['Verb'] + '">'
+            phrase_translations_html_short = (
+                      '<p style="margin-top: .5em;font-weight:bold;color:' + sejongtagset.SuperClass_Colours['Noun'] + '">'
                       + html.escape(self.wrapper.fill(tshort_t)).replace("\n", "<BR>")
                       + '</p>'
                       )
             total_lines_remain = total_lines_remain - self.wrapper.max_lines
+        else:
+            phrase_translations_html_short = ""
         
         if len(translations) > 0:
             if len(translations) == 1:
-                tshort_t = ";\n".join(translations)
-            if len(translations) == 2:
+                tshort_t = translations[0]
+            elif len(translations) > 1:
                 self.wrapper.max_lines = 2
                 tshort_t = ";\n".join([self.wrapper.fill(t) for t in translations])
-            elif len(translations) > 2:
-                self.wrapper.max_lines = 1
-                tshort_t = ";\n".join([self.wrapper.fill(t) for t in translations])
+            #if len(translations) == 1:
+                #tshort_t = ";\n".join(translations)
+            #if len(translations) == 2:
+                #self.wrapper.max_lines = 2
+                #tshort_t = ";\n".join([self.wrapper.fill(t) for t in translations])
+            #elif len(translations) > 2:
+                #self.wrapper.max_lines = 1
+                #tshort_t = ";\n".join([self.wrapper.fill(t) for t in translations])
             self.wrapper.max_lines = total_lines_remain
-            tshort = tshort + html.escape(self.wrapper.fill(tshort_t)).replace("\n", "<BR>")
+            translations_html_short = html.escape(self.wrapper.fill(tshort_t)).replace("\n", "<BR>")
+        else:
+            translations_html_short = ""
 
         description = ("<p>" + html.escape(pos_info) 
-                    + "</p><p style=\"margin-top: .5em;\">" + tshort 
+                    + "</p><p style=\"margin-top: .5em;\">" 
+                    + translations_html_short
+                    + phrase_translations_html_short
                     + "</p>").replace("\n", "<br>")
 
         tooltip = ( naverlink + daumlink1 + daumlink2
                     + hr + '<p style="margin-top: .5em;">'
                     + f'{pos_info_long}</p>'
-                    + phrase_translations_html
                     + translations_html
+                    + phrase_translations_html
                     + grammarlink_matches_html
                     ).replace("\n", "<br>")
 
         self.xprint('    <li>')
-        self.xprint('      <ol class=word>')
+        self.xprint(f'      <ol class=word onclick="showtooltip(event, \'tipnumber{self.tipnumber}\')">')
         self.xprint(f'        <li lang=es>{full_word}</li>')
-        self.xprint(f'        <li lang=en_MORPH class=tooltip onclick="showtooltip(event, \'tipnumber{self.tipnumber}\')">{description}<span class=tooltiptext id="tipnumber{self.tipnumber}">{tooltip}</span></li><br>')
+        self.xprint(f'        <li lang=en_MORPH class=tooltip>{description}<span class=tooltiptext id="tipnumber{self.tipnumber}">{tooltip}</span></li><br>')
         self.xprint('      </ol>')
         self.xprint('    </li>')
 
