@@ -17,7 +17,46 @@
             color: {{ SuperClass_Colours["Noun"]|safe }};
         }
     </style>
+    <script type="text/javascript">
+    window.onunload = function(){};
+
+    var butt = document.getElementById('butt');
+    
+    butt.addEventListener('click', function(event) { 
+        setTimeout(function () {
+            event.target.disabled = true;
+        }, 0);
+    });
+    
+    /*! Reloads page on every visit */
+    // https://stackoverflow.com/questions/24046/the-safari-back-button-problem
+    // https://coderwall.com/p/ndecha
+    function Reload() {
+        try {
+            var headElement = document.getElementsByTagName("head")[0];
+            if (headElement && headElement.innerHTML)
+                headElement.innerHTML += " ";
+            } catch (e) {}
+    }
+
+    /*! Reloads on every visit in mobile safari */
+    if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
+        window.onpageshow = function(evt) {
+            if (evt.persisted) {
+                //document.body.style.display = "none";
+                //location.reload();
+                setTimeout(function () {
+                        evt.target.disabled = False;
+                    }, 0);
+            }
+        };
+    }
+
+    
+    
+    </script>
 {% endblock %}
+{% block morebodytag %} onunload=""{% endblock %}
 {% block content %}
     <div class="wrappercomment">
       <h1><span style="color: {{ SuperClass_Colours['Verb']|safe }};">Korean</span><span style="color: {{ SuperClass_Colours['Noun']|safe }};">-English </span><span style="color: {{ SuperClass_Colours['Particle']|safe }};">Interlinear</span></h1>
@@ -36,19 +75,6 @@
 		<p>Type or paste Korean to generate interlinear from. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages.</p>
 		<p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
 		<p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait!)"></p>
-        <script>
-            var butt = document.getElementById('butt');
-            
-            //butt.disabled = false;
-            
-            window.onunload = function(){};
-            
-            butt.addEventListener('click', function(event) { 
-                setTimeout(function () {
-                    event.target.disabled = true;
-                }, 0);
-            });
-        </script>
       </form>
     </div>
     
