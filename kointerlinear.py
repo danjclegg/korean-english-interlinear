@@ -141,7 +141,7 @@ class KoInterlinear:
 
             return_rows = [
                 (
-                    ": " + row[1] if word == original_word else
+                    row[1] if word == original_word else
                     " ".join([row[0], row[1]])
                 )
                 for row in rows if row is not None and row[1] != None and row[1] != ""
@@ -572,7 +572,7 @@ class KoInterlinear:
             self.wrapper.max_lines = total_lines_remain
             translations_html_short = html.escape(
                 self.wrapper.fill("; ".join(translations))
-                ).replace("\n", "<BR>").replace(": ", ":&nbsp;")
+                ).replace("\n", "<BR>") #.replace(": ", ":&nbsp;")
         else:
             translations_html_short = "---"
 
