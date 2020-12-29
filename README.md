@@ -10,4 +10,4 @@ It relies on these has these dependencies:
 - [Soylemma](https://github.com/lovit/korean_lemmatizer), and
 - Requires the [KEngDic dictionary](https://github.com/garfieldnate/kengdic) to be manually loaded into a [PostgreSQL](https://www.postgresql.org/) database (script attached).
 
-Credit for the interlinear css to [Pat on Stack Exchange](https://linguistics.stackexchange.com/questions/3/how-do-i-format-an-interlinear-gloss-for-html), and for inspiration for the colour scheme to [Solarized 8](https://github.com/lifepillar/vim-solarized8).
+Credit for the interlinear css to [Pat on Stack Exchange](https://linguistics.stackexchange.com/questions/3/how-do-i-format-an-interlinear-gloss-for-html), and for inspiration for the colour scheme to [Solarized 8](https://github.com/lifepillar/vim-solarized8). Inspiration for the project came from [BibleHub's Greek-English interlinear](https://biblehub.com/interlinear/john/1-1.htm) site which has been a big help to me.

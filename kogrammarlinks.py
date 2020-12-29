@@ -166,7 +166,7 @@ class KoGrammarLinks:
             # whitespace at beginning here
             suppattern = suppattern + '\s*(?:\([^\)]*\))?'
             
-            if nextbranch != None and len(nextbranch) > 0 and len(nextbranch[0]) > 0:
+            if nextbranch != None and nextbranch and len(nextbranch[0]) > 0:
                 # then must also match next word 
                 # or also any character other than a korean character
                 nextmorph = nextbranch[0][0]
@@ -191,7 +191,7 @@ class KoGrammarLinks:
             grammarlinks.extend(self.supplementary_matches_search(suppattern))
             #print(len(grammarlinks))                    
          
-            if len(grammarlinks) > 0:
+            if grammarlinks:
                 return grammarlinks
         return []
 
@@ -232,10 +232,10 @@ class KoGrammarLinks:
                 remaining_morphs = []
                 if last_morph_index >= i + 1:
                     remaining_morphs = branch[i + 1: last_morph_index + 1]
-                remaining_morphs_text = "".join(morph[0] for morph in remaining_morphs if len(morph) > 0)
+                remaining_morphs_text = "".join(morph[0] for morph in remaining_morphs if morph)
                 
                 nextmorph_text = ""
-                if not hit_a_symbol and nextbranch != None and len(nextbranch) > 0 and len(nextbranch[0]) > 0:
+                if not hit_a_symbol and nextbranch != None and nextbranch and len(nextbranch[0]) > 0:
                     nextmorph_text = nextbranch[0][0]
                 
                 #print("branch i; particle, preceeding_char, preceeding_char_final, hit_a_symbol, last_morph_index, remaining_morphs, nextmorph_text, nextbranch")
@@ -294,11 +294,11 @@ class KoGrammarLinks:
 
         grammarlinks = self.search_word_method2(branch, nextbranch)
         
-        if len(grammarlinks) > 0:
+        if grammarlinks:
             return grammarlinks
         
         grammarlinks = self.search_word_method1(branch, nextbranch)
-        #if len(grammarlinks) > 0:
+        #if grammarlinks:
             #print("*********************found grammarlinks with fallback***********************************")
             #if branch == [('재산', 'NNG'), ('으로', 'JKB')]:
             #    from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging

@@ -23,7 +23,7 @@ def run_generator(entry):
     else:
         con = psycopg2.connect(DATABASE_URL, sslmode='require')
     
-    print("Database opened successfully")
+    #print("Database opened successfully")
     
     generator = KoInterlinear(entry, con)
     body = generator.generate()
