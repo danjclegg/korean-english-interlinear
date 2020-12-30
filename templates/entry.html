@@ -16,6 +16,17 @@
             margin-bottom: .25em;
             color: {{ SuperClass_Colours["Noun"]|safe }};
         }
+        
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: {{ SuperClass_Colours['Verb']|safe }};
+            border: none;
+            color: {{ SuperClass_Colours["Symbol"]|safe }};
+            padding: 6px 28px;
+            text-decoration: none;
+            margin: 4px 0px;
+            cursor: pointer;
+            font-size: 12px;
+        }
     </style>
     <script type="text/javascript">
     window.onunload = function(){};
@@ -65,16 +76,16 @@
     <div class="wrappercomment">
     <h4>Notes</h4>
     <p>
-        This program generates crude literal/word-for-word translations with the two languages stacked together with tappable/popup information boxes. It is designed for learning vocabulary and grammar with any text you choose. The generated pages are self-contained single html files ideal for downloading/saving for offline reading. As it is automatic, by simple dictionary look-ups, the translation and grammar aids are only possibilities. This roughness prevents focusing on the English and the literal translation offers unique insights into the Korean.
+        Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear) and supplies extra contextual information in clickable pop-up boxes. The literal translation offers insights into the Korean language that full-sentence translation obscures. The generated pages are self-contained files ideal for saving for offline reading. As it uses simple dictionary look-ups, the translations are only possibilities.
     </p>
     </div>
     
     <div class="wrappercomment">  
       <form role="form" method='POST' action='/generate'>
 		<h4>Enter Text</h4>
-		<p>Type or paste Korean to generate interlinear from. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages.</p>
+		<p>Type or paste Korean to generate interlinear. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages as each paragraph is also linked individually to an external full paragraph translation for reference.</p>
 		<p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
-		<p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait!)"></p>
+		<p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
       </form>
     </div>
     

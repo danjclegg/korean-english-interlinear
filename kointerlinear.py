@@ -125,7 +125,7 @@ class KoInterlinear:
 
 
     def get_trans_fetch(self, word, original_word):
-        self.cur.execute("SELECT word, def AS trans FROM korean_english WHERE word = %s;", (word,))
+        self.cur.execute("SELECT word, def, extradata FROM korean_english WHERE word = %s ORDER BY extradata, wordid;", (word,))
         rows = self.cur.fetchall()
 
         if type(rows) is list and rows:
@@ -138,7 +138,7 @@ class KoInterlinear:
                 #if original_word not in self.missing_words:
                     #print("Note, blank dictionary definition for word: " + original_word)
                     #self.missing_words.append(original_word)
-
+            
             return_rows = [
                 (
                     row[1] if word == original_word else
@@ -208,6 +208,14 @@ class KoInterlinear:
 
         return []
         
+    
+    def list_unique(self, inlist):
+        unique = []
+        for item in inlist:
+            if item not in unique:
+                unique.append(item)
+        return unique
+    
         
     def get_translations(self, original_branch, nextbranch = None, nextnextbranch = None):
         original_branch = self.remove_lead_trail_symbols(original_branch)
@@ -247,36 +255,11 @@ class KoInterlinear:
             #print("Found with branchwoendparticles*********\n" + str(original_branch) + ": " + str(branch_wo_end_particles) + ": " + str(translations))
             return translations
         
-        ##maybe remove this as might preclude matching more stuff below? or make this plural
-        #main_chunks = self.get_main_chunks(branch_wo_end_particles, ['N', 'V'])
-        #for main_chunk in main_chunks:
-            #translations = self.try_lemmatization_methods(main_chunk, original_word)
-            #if translations:
-                ##print("Found with NV merged**************************\n" + str(original_branch) + ": " + str(main_chunk) + ": " + str(translations))
-                #return translations
-        
-        #main_chunks_M = sorted(self.get_main_chunks(branch_wo_end_particles, ['M']), key = self.get_plain_word_len)
-        #main_chunks_V = sorted(self.get_main_chunks(branch_wo_end_particles, ['V']), key = self.get_plain_word_len)
-        #main_chunks_N = sorted(self.get_main_chunks(branch_wo_end_particles, ['N']), key = self.get_plain_word_len)
-        #main_chunks_merged = sorted(self.get_main_chunks(branch_wo_end_particles, ['N', 'V', 'M']), key = self.get_plain_word_len)
-        #main_chunks_NVM = main_chunks_M
-        #main_chunks_NVM.extend(main_chunks_V)
-        #main_chunks_NVM.extend(main_chunks_N)
-        #main_chunks_NVM.extend(main_chunks_merged)
-        ##print(main_chunks_NVM)
-        ##print(set(main_chunks_NVM))
-        ##main_chunks_NVM = list(set(main_chunks_NVM)) #get unique
-        #main_chunks_NVM_largest_sorted = sorted(main_chunks_NVM, key=self.get_plain_word_len)
-        #main_chunks_NVM_largest_sorted.reverse() #put back into N, V,... order
-        
         main_chunks = self.get_main_chunks(branch_wo_end_particles, ['N', 'V', 'M'])
         main_chunks.extend(self.get_main_chunks(branch_wo_end_particles, ['M']))
         main_chunks.extend(self.get_main_chunks(branch_wo_end_particles, ['V']))
         main_chunks.extend(self.get_main_chunks(branch_wo_end_particles, ['N']))
-        main_chunks_unique = []
-        for main_chunk in main_chunks:
-            if main_chunk not in main_chunks_unique:
-                main_chunks_unique.append(main_chunk)
+        main_chunks_unique = self.list_unique(main_chunks)
         main_chunks_NVM_largest_sorted = sorted(main_chunks_unique, key=self.get_plain_word_len)
         main_chunks_NVM_largest_sorted.reverse()
         
@@ -323,7 +306,9 @@ class KoInterlinear:
                     if translations:
                         #print("Found with char off end*****************************************\n" + str(original_branch) + ": " + str([(word, firstclass)]) + ": " + str(translations))
                         continue
-            
+        
+        translations = self.list_unique(translations)
+        
         if translations:
             return translations
 
