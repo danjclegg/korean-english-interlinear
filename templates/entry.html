@@ -18,9 +18,9 @@
         }
         
         input[type=button], input[type=submit], input[type=reset] {
-            background-color: {{ SuperClass_Colours['Verb']|safe }};
+            background-color: {{ SuperClass_Colours['Noun']|safe }};
             border: none;
-            color: {{ SuperClass_Colours["Symbol"]|safe }};
+            color: {{ SuperClass_Colours['Tooltip']|safe }};
             padding: 6px 28px;
             text-decoration: none;
             margin: 4px 0px;
@@ -28,44 +28,6 @@
             font-size: 12px;
         }
     </style>
-    <script type="text/javascript">
-    window.onunload = function(){};
-
-    var butt = document.getElementById('butt');
-    
-    butt.addEventListener('click', function(event) { 
-        setTimeout(function () {
-            event.target.disabled = true;
-        }, 0);
-    });
-    
-    /*! Reloads page on every visit */
-    // https://stackoverflow.com/questions/24046/the-safari-back-button-problem
-    // https://coderwall.com/p/ndecha
-    function Reload() {
-        try {
-            var headElement = document.getElementsByTagName("head")[0];
-            if (headElement && headElement.innerHTML)
-                headElement.innerHTML += " ";
-            } catch (e) {}
-    }
-
-    /*! Reloads on every visit in mobile safari */
-    if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
-        window.onpageshow = function(evt) {
-            if (evt.persisted) {
-                //document.body.style.display = "none";
-                //location.reload();
-                setTimeout(function () {
-                        evt.target.disabled = False;
-                    }, 0);
-            }
-        };
-    }
-
-    
-    
-    </script>
 {% endblock %}
 {% block morebodytag %} onunload=""{% endblock %}
 {% block content %}
@@ -81,12 +43,25 @@
     </div>
     
     <div class="wrappercomment">  
-      <form role="form" method='POST' action='/generate'>
-		<h4>Enter Text</h4>
-		<p>Type or paste Korean to generate interlinear. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages as each paragraph is also linked individually to an external full paragraph translation for reference.</p>
-		<p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
-		<p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
-      </form>
+        <form role="form" method='POST' action='/generate'>
+            <h4>Enter Text</h4>
+            <p>Type or paste Korean to generate interlinear. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages as each paragraph is also linked individually to an external full paragraph translation for reference.</p>
+            <p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
+            <p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
+        </form>
+        <script type="text/javascript">
+        var butt = document.getElementById('butt');
+        
+        if (!((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion))) {
+            butt.addEventListener('click', function(event) { 
+                setTimeout(function () {
+                    event.target.disabled = true;
+                }, 0);
+            });
+        }
+        
+        window.onunload = function(){};
+        </script>
     </div>
     
     <div class="wrappercomment">
