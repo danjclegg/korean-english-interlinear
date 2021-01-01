@@ -519,7 +519,7 @@ class KoInterlinear:
                 gtext = html.escape(grammarlink_match[0])
                 glink = grammarlink_match[1]
                 grammarlink_matches_html = (grammarlink_matches_html
-                                            + '<p><a title="Koreangrammaticalforms.com" class=diclink target="_blank"' 
+                                            + '<p><a class=diclink target="_blank"' 
                                             + f'rel="noopener noreferrer" href="{glink}">{gtext} {self.pointer_char}</a></p>')
             grammarlink_matches_html = grammarlink_matches_html + '</p>'
         

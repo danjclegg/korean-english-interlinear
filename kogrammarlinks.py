@@ -23,7 +23,7 @@ class KoGrammarLinks:
         self.particleclasses = ['EC', 'EF', 'EP', 'ETM', 'ETN', 'JC', 'JKB', 'JKC', 'JKG', 'JKO', 'JKQ', 'JKS', 'JKV', 'JX', 'XPN', 'XR', 'XSA', 'XSN', 'XSV']
 
         #supplementary list of basic particles
-        self.eightdaykoreanlinks = {
+        self.ninetydaykoreanlinks = {
             '~은 (Subject/Topic)':		'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic',
             '~는 (Subject/Topic)':		'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic',
             '~이 (Subject)': 			'https://www.90daykorean.com/korean-particles/#-i-ga-subject',
@@ -94,9 +94,9 @@ class KoGrammarLinks:
 
     def supplementary_matches_search(self, pattern):
         matches = []
-        for key in self.eightdaykoreanlinks:
+        for key in self.ninetydaykoreanlinks:
             if re.match(pattern, key) is not None:
-                matches.append(("8DK: " + key, self.eightdaykoreanlinks[key]))
+                matches.append(("9DK: " + key, self.ninetydaykoreanlinks[key]))
         return matches
 
 
