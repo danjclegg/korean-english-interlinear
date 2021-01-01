@@ -514,7 +514,7 @@ class KoInterlinear:
         grammarlink_matches_html = ''
         if grammarlink_matches:
             grammarlink_matches_html = hr + '<p style="margin-top: .5em;">'
-            pos_info = pos_info + "﹡"        
+            #pos_info = pos_info + "﹡"        
             for grammarlink_match in grammarlink_matches:
                 gtext = html.escape(grammarlink_match[0])
                 glink = grammarlink_match[1]
@@ -559,7 +559,7 @@ class KoInterlinear:
                 self.wrapper.fill("; ".join(translations))
                 ).replace("\n", "<BR>") #.replace(": ", ":&nbsp;")
         else:
-            translations_html_short = "---"
+            translations_html_short = "——"
 
         description = ("<p>" + html.escape(pos_info) 
                     + "</p><p style=\"margin-top: .5em;\">" 

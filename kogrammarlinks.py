@@ -52,7 +52,7 @@ class KoGrammarLinks:
             '~고 (connective)': 			'https://www.90daykorean.com/korean-particles/#-go-connective'
         }
 
-    #to be used manually only
+    #to be used manually only to cache links for lookup by rest of this class
     def download_links():
         if os.path.exists(self.grammarfilename):
             print("File already exists " + self.grammarfilename)
@@ -160,7 +160,7 @@ class KoGrammarLinks:
             suppattern = suppattern + re.escape(endingscombinedcut) 
             
             # pattern is matching bracketed trailing characters
-            pattern = pattern + '(?:\(?[만요는를은을]\)?)?[0-9]?(?:\s+|$)'
+            pattern = pattern + '(?:\(?[요는를은을]\)?)?[0-9]?(?:\s+|$)'
             
             # suppattern is matching bracketed translations so can be separated by 
             # whitespace at beginning here
@@ -176,16 +176,6 @@ class KoGrammarLinks:
                 pattern = pattern + '(?:[a-zA-Z0-9].*$|\s*$)'
             suppattern = suppattern + '\s*$'
             
-            #if endingscombinedcut== "을":
-                #print(pattern)
-                #print(suppattern)
-                ##(에)서
-                #동굴에서
-
-                #에not match
-                #정상에
-
-
             grammarlinks = self.matches_search(pattern)
             #print(len(grammarlinks))
             grammarlinks.extend(self.supplementary_matches_search(suppattern))
@@ -262,7 +252,7 @@ class KoGrammarLinks:
                     suppattern = suppattern + '(?:\(?' + re.escape(remaining_morphs_text) + '\)?)?'
                 
                 # matching bracketed trailing characters 
-                pattern = pattern + '(?:\(?[만요는를은을다가서도요이]\)?)?[0-9]?(?:\s+|$)'
+                pattern = pattern + '(?:\(?[요는를은을다가요이]\)?)?[0-9]?(?:\s+|$)'
                 
                 # matching bracketed translations so can be separated by 
                 # whitespace at beginning here
