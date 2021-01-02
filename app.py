@@ -22,9 +22,7 @@ def run_generator(entry):
         con = psycopg2.connect(database="kengdic", user='', password='', host="localhost")
     else:
         con = psycopg2.connect(DATABASE_URL, sslmode='require')
-    
-    #print("Database opened successfully")
-    
+
     generator = KoInterlinear(entry, con)
     body = generator.generate()
 
@@ -42,13 +40,13 @@ def login():
     
     body = run_generator(entry)
     
-    return render_template("generate.html", body=body, SuperClass_Colours=sejongtagset.SuperClass_Colours)
+    return render_template("generate.html", body=body)
 
 @app.route('/', methods=['GET'])
 def entry():
     #prime the dyno
     run_generator("저")
     
-    return render_template("entry.html", SuperClass_Colours=sejongtagset.SuperClass_Colours) 
+    return render_template("entry.html") 
 
 

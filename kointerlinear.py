@@ -101,44 +101,11 @@ class KoInterlinear:
             return ""
 
 
-    def get_sejongtagset_colour(self, tag):
-        sejong_superclass = self.get_sejongtagset_superclass(tag)
-        if sejong_superclass == "":
-            return ""
-        return sejongtagset.SuperClass_Colours[sejong_superclass]
-
-        
-    #note, not checked for input safety
-    #def print_tree(self, tree, prepend = ""):
-        ##print(prepend + "print tree call on: " + str(tree))
-        #if type(tree) is str:
-                #print(prepend + "\"" + tree + "\"")
-        #elif type(tree) is list:
-            #print(prepend + "[")
-            #for branch in tree:
-                #self.print_tree(branch, prepend + "\t")
-            #print(prepend + "]")
-        #elif type(tree) == tuple:
-            #print(prepend + "(" + ", ".join(tree) + ")")
-        #else:
-            #print(prepend + "error, unexpected branch type" + str(type(tree)))
-
-
     def get_trans_fetch(self, word, original_word):
         self.cur.execute("SELECT word, def, extradata FROM korean_english WHERE word = %s ORDER BY extradata, wordid;", (word,))
         rows = self.cur.fetchall()
 
         if type(rows) is list and rows:
-            
-            #uncomment to reimplement missing word addition later maybe
-            #oword_blank_defs = sum( 1 for row in rows if row[0] == original_word and (row[1] == "" or row[1] == None) )
-            #oword_non_blank_defs = sum( 1 for row in rows if row[0] == original_word and (row[1] != "" and row[1] != None) )
-            #if oword_non_blank_defs == 0 and oword_blank_defs > 0:
-                ## then we didn't find any non-blank defs and we did find a blank def
-                #if original_word not in self.missing_words:
-                    #print("Note, blank dictionary definition for word: " + original_word)
-                    #self.missing_words.append(original_word)
-            
             return_rows = [
                 (
                     row[1] if word == original_word else
@@ -448,7 +415,7 @@ class KoInterlinear:
                 self.xprint('    <ol class=sentence>')
                 self.xprint('    <li>')
                 self.xprint('      <ol class=comment>')
-                self.xprint('        <li lang=en_MORPH style="color:' + sejongtagset.SuperClass_Colours["Comment"] + ';">')
+                self.xprint('        <li lang=en_MORPH style="color: var(--page-Noun);">')
                 self.xprint(html.escape(passage))
                 self.xprint('        </li>')
                 self.xprint('      </ol>')
@@ -475,8 +442,8 @@ class KoInterlinear:
 
 
 
-        full_word = "".join([   (   "<span style='color:" +
-                                    self.get_sejongtagset_colour(x[1]) + ";'>" +
+        full_word = "".join([   (   "<span style='color: var(--page-" +
+                                    self.get_sejongtagset_superclass(x[1]) + ");'>" +
                                     html.escape(x[0]) +
                                     "</span>"
                                 ) for x in branch
@@ -501,15 +468,15 @@ class KoInterlinear:
 
         pos_info = "-".join([self.get_sejongtagset_abbrev(x[1]) for x in non_symbol_branch])
         
-        pos_info_long = "\n".join([ (   "<span style='color:" +
-                                        self.get_sejongtagset_colour(x[1]) + ";'>" +
+        pos_info_long = "\n".join([ (   "<span style='color: var(--page-" +
+                                        self.get_sejongtagset_superclass(x[1]) + ");'>" +
                                         html.escape(x[0]) + " " +
                                         self.get_sejongtagset_name(x[1]) +
                                         "</span>"
                                     ) for x in non_symbol_branch ])
         
         
-        hr = '<hr style="width:80%;text-align:left;margin-left:0;height:1px;border-width:0;color:#eee;background-color:#eee">'
+        hr = '<hr style="width:80%;text-align:left;margin-left:0;height:1px;border-width:0;color: var(--page-Border);background-color:var(--page-Border);">'
         grammarlink_matches = self.kogrammarlinks.search(branch, nextbranch)
         grammarlink_matches_html = ''
         if grammarlink_matches:
@@ -533,7 +500,7 @@ class KoInterlinear:
         phrase_translations = self.fetch_phrase_translations(plain_word, self.get_plain_word(nextbranch), self.get_plain_word(nextnextbranch))
         
         if phrase_translations:
-            phrase_translations_html = (hr + '<p style="margin-top: .5em;font-weight:bold;color:' + sejongtagset.SuperClass_Colours['Noun'] + '">' + html.escape(";\n".join(phrase_translations)) + '</p>')
+            phrase_translations_html = (hr + '<p style="margin-top: .5em;font-weight:bold;color: var(--page-Noun)">' + html.escape(";\n".join(phrase_translations)) + '</p>')
         else:
             phrase_translations_html = ''
 
@@ -545,7 +512,7 @@ class KoInterlinear:
             tshort_t = ";\n".join(phrase_translations)
             self.wrapper.max_lines = 2
             phrase_translations_html_short = (
-                      '<p style="margin-top: .5em;font-weight:bold;color:' + sejongtagset.SuperClass_Colours['Noun'] + '">'
+                      '<p style="margin-top: .5em;font-weight:bold;color: var(--page-Noun)">'
                       + html.escape(self.wrapper.fill(tshort_t)).replace("\n", "<BR>")
                       + '</p>'
                       )

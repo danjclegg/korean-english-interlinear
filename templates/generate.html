@@ -26,15 +26,15 @@
         padding-top: 3px;
         padding-bottom: 3px;
         font-size: 10px;
-        color:#aaa;
+        color: var(--page-InterInfo);
     }
 
     ol.word {
         padding: .5em;
         margin-bottom: .5em;
-        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        background: var(--page-WordCell);
         float:left;
-        border: 1px dotted #ddd;
+        border: 1px dotted var(--page-Border);
         display: inline-block;
         height: 6em;
         cursor: pointer;
@@ -43,9 +43,9 @@
     ol.comment {
         padding: .5em;
         margin-bottom: .5em;
-        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        background: var(--page-WordCell);
         float:left;
-        border: 1px dotted #ccc;
+        border: 1px dotted var(--page-Border);
         display: inline-block;
     }
 
@@ -75,32 +75,32 @@
     .tooltip .tooltiptext {
         visibility: hidden;
         width: 120px;
-        background-color: {{ SuperClass_Colours["Tooltip"]|safe }};
-        color: {{ SuperClass_Colours["Noun"]|safe }};
+        background-color: var(--page-Tooltip);
+        color: var(--page-Noun);
         text-align: left;
         font-size: 10px;
         padding: 5px 5px;
         border-radius: 6px;
-        border: 1px dotted #ccc;
+        border: 1px dotted var(--page-Border);
         /* Position the tooltip text - see examples below! */
         position: absolute;
         z-index: 1;
     }
 
     .tooltip .tooltiptext {
-    top: -5px;
-    left: 105%;
+        top: -5px;
+        left: 105%;
     }
 
     .tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    top: 12px;
-    right: 100%; /* To the left of the tooltip */
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent hsla(0, 0%, 80%, 50) transparent transparent;
+        content: " ";
+        position: absolute;
+        top: 12px;
+        right: 100%; /* To the left of the tooltip */
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent var(--page-Comment) transparent transparent;
     }
 
     /* Show the tooltip text when you mouse over the tooltip container */
@@ -117,20 +117,21 @@
     
     a.diclink {
         text-decoration: none;
-        color: {{ SuperClass_Colours["Noun"]|safe }};
+        color: var(--page-Noun);
     }
 
     a.translink {
         text-decoration: none;
         font-weight: normal;
-        color: {{ SuperClass_Colours["Noun"]|safe }};
+        color: var(--page-Noun);
     }
 
     </style>
 {% endblock %}
 
 {% block content %}
-    <div onclick="closealltooltips()" style="width:104%;">
+    <div style="float: right;"><span onclick="switch_theme();">&#127770;</span></div>
+    <div onclick="closealltooltips();" style="width:104%;">
     {{ body|safe }}
     </div>
 {% endblock %}

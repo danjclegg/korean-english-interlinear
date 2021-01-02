@@ -2,25 +2,25 @@
 {% block morehead %}
     <style>
         textarea {
-            border: 1px dotted #999;
+            border: 1px dotted var(--page-Border);
             width:100%;
             margin-top: 5px;
             font-size: 12px;
         }
         h1 {
             margin: 0;
-            color: {{ SuperClass_Colours["Particle"]|safe }};
+            color: var(--page-Particle);
         }
         h4 {
             margin: 0;
             margin-bottom: .25em;
-            color: {{ SuperClass_Colours["Noun"]|safe }};
+            color: var(--page-Noun);
         }
         
         input[type=button], input[type=submit], input[type=reset] {
-            background-color: {{ SuperClass_Colours['Noun']|safe }};
+            background-color: var(--page-Noun);
             border: none;
-            color: {{ SuperClass_Colours['Tooltip']|safe }};
+            color: var(--page-Tooltip);
             padding: 6px 28px;
             text-decoration: none;
             margin: 4px 0px;
@@ -32,7 +32,7 @@
 {% block morebodytag %} onunload=""{% endblock %}
 {% block content %}
     <div class="wrappercomment">
-      <h1><span style="color: {{ SuperClass_Colours['Verb']|safe }};">Korean</span><span style="color: {{ SuperClass_Colours['Noun']|safe }};">-English </span><span style="color: {{ SuperClass_Colours['Particle']|safe }};">Interlinear</span></h1>
+      <h1><span style="color: var(--page-Verb);">Korean</span><span style="color: var(--page-Noun);">-English </span><span style="color: var(--page-Particle);">Interlinear</span></h1>
     </div>
     
     <div class="wrappercomment">
@@ -67,7 +67,7 @@
     <div class="wrappercomment">
     <h4 style="margin-bottom: .5em;">Sample Text</h4>
     <p style="margin-bottom: .5em;">
-    Check out this great book, <a style="color:{{ SuperClass_Colours['Particle']|safe }}" href="https://open.umn.edu/opentextbooks/textbooks/422">Korean Through Folktales</a>, for text at different reading levels. You can also copy and paste from the sample text below:<br>
+    Check out this great book, <a style="color: var(--page-Particle);" href="https://open.umn.edu/opentextbooks/textbooks/422">Korean Through Folktales</a>, for text at different reading levels. You can also copy and paste from the sample text below:<br>
     <br>
     </p>
     <p style="margin-bottom: .5em;">#애국가 - Korean National Anthem</p>
@@ -91,7 +91,7 @@
     <div class="wrappercomment">
     <h4>More Information</h4>
     <p>
-    Check out the <a style="color:{{ SuperClass_Colours['Particle']|safe }}" href="https://github.com/danjclegg/korean-english-interlinear">github page</a> for more technical information on the program. See footer for license and disclaimer.
+    Check out the <a style="color: var(--page-Particle);" href="https://github.com/danjclegg/korean-english-interlinear">github page</a> for more technical information on the program. See footer for license and disclaimer.
     </p>
     </div>
 {% endblock %}

@@ -92,17 +92,20 @@ SejongTagset = {
 SuperClass_Colours = {
     'Background':   '#f0eada',
     'WordCell':     '#f8f6f2',
+    'Border':       '#dddddd',
     'Tooltip':      '#fbf9f5',
+    'Comment':      '#7c888b',
+    'InterInfo':    '#aaaaaa',
+    'ForeignWord':  '#aaaaaa',
     'Adverb':       '#a88c41',
     'Noun':         '#43423f',
     'Pronoun':      '#5ba195',
     'Verb':         '#b75f37',
     'CardinalNumber': '#43423f',
     'Determiner':   '#8da44d',
-    'ForeignWord':  'hsl(0, 0%, 70%)',
     'Interjection': '#b75f37',
     'Symbol':       '#2b2a28',
     'Particle':     '#7c888b',
-    'Comment':      '#7c888b',
     'UNKNOWN':      '#43423f'
 }
+

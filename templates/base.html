@@ -19,6 +19,66 @@
 {% endblock %}
 {% block style %}    
     <style>
+
+    :root {
+        /* for light mode */
+        --light-Background: #f0eada;
+        --light-WordCell: #f8f6f2;
+        --light-Border: #dddddd;
+        --light-Tooltip: #fbf9f5;
+        --light-Comment: #7c888b;
+        --light-InterInfo: #aaaaaa;
+        --light-ForeignWord: #aaaaaa;
+        --light-Adverb: #a88c41;
+        --light-Noun: #43423f;
+        --light-Pronoun: #5ba195;
+        --light-Verb: #b75f37;
+        --light-CardinalNumber: #43423f;
+        --light-Determiner: #8da44d;
+        --light-Interjection: #b75f37;
+        --light-Symbol: #2b2a28;
+        --light-Particle: #7c888b;
+        --light-UNKNOWN: #43423f;
+        
+        /* for dark mode */
+        --dark-Background: #1f1c17;
+        --dark-WordCell: #070705;
+        --dark-Border: #23221e;
+        --dark-Tooltip: #030301;
+        --dark-Comment: #70777b;
+        --dark-InterInfo: #535250;
+        --dark-ForeignWord: #535250;
+        --dark-Adverb: #b4913a;
+        --dark-Noun: #c0bcad;
+        --dark-Pronoun: #4c9d8f;
+        --dark-Verb: #ba5430;
+        --dark-CardinalNumber: #c0bcad;
+        --dark-Determiner: #90a645;
+        --dark-Interjection: #ba5430;
+        --dark-Symbol: #d4d5d7;
+        --dark-Particle: #70777b;
+        --dark-UNKNOWN: #c0bcad;
+        
+        /* select light mode */
+        --page-Background: var(--light-Background);
+        --page-WordCell: var(--light-WordCell);
+        --page-Border: var(--light-Border);
+        --page-Tooltip: var(--light-Tooltip);
+        --page-Comment: var(--light-Comment);
+        --page-InterInfo: var(--light-InterInfo);
+        --page-ForeignWord: var(--light-ForeignWord);
+        --page-Adverb: var(--light-Adverb);
+        --page-Noun: var(--light-Noun);
+        --page-Pronoun: var(--light-Pronoun);
+        --page-Verb: var(--light-Verb);
+        --page-CardinalNumber: var(--light-CardinalNumber);
+        --page-Determiner: var(--light-Determiner);
+        --page-Interjection: var(--light-Interjection);
+        --page-Symbol: var(--light-Symbol);
+        --page-Particle: var(--light-Particle);
+        --page-UNKNOWN: var(--light-UNKNOWN);
+    }
+    
     div,li,ol,p,pre,ul{
         margin:0;
         padding:0;
@@ -29,7 +89,7 @@
         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         padding:0;
         margin:4px;
-        background-color: {{ SuperClass_Colours["Background"]|safe }};
+        background-color: var(--page-Background);
     }
 
     a{
@@ -58,9 +118,9 @@
         font-size: 12px;
         width:95%;
         max-width: 1000px;
-        background: {{ SuperClass_Colours["WordCell"]|safe }};
+        background: var(--page-WordCell);
         float:left;
-        border: 1px dotted #ccc;
+        border: 1px dotted var(--page-Border);
         display: inline-block;
     }
     
@@ -91,6 +151,35 @@
             closealltooltips();
         }
     }
+    
+    currentMode = "light";
+    
+    function switch_theme() {
+        if(currentMode == "light") {
+            currentMode = "dark";
+        }
+        else {
+            currentMode = "light";
+        }
+        document.body.style.setProperty("--page-Background", `var(--${currentMode}-Background)`);
+        document.body.style.setProperty("--page-WordCell", `var(--${currentMode}-WordCell)`);
+        document.body.style.setProperty("--page-Border", `var(--${currentMode}-Border)`);
+        document.body.style.setProperty("--page-Tooltip", `var(--${currentMode}-Tooltip)`);
+        document.body.style.setProperty("--page-Comment", `var(--${currentMode}-Comment)`);
+        document.body.style.setProperty("--page-InterInfo", `var(--${currentMode}-InterInfo)`);
+        document.body.style.setProperty("--page-ForeignWord", `var(--${currentMode}-ForeignWord)`);
+        document.body.style.setProperty("--page-Adverb", `var(--${currentMode}-Adverb)`);
+        document.body.style.setProperty("--page-Noun", `var(--${currentMode}-Noun)`);
+        document.body.style.setProperty("--page-Pronoun", `var(--${currentMode}-Pronoun)`);
+        document.body.style.setProperty("--page-Verb", `var(--${currentMode}-Verb)`);
+        document.body.style.setProperty("--page-CardinalNumber", `var(--${currentMode}-CardinalNumber)`);
+        document.body.style.setProperty("--page-Determiner", `var(--${currentMode}-Determiner)`);
+        document.body.style.setProperty("--page-Interjection", `var(--${currentMode}-Interjection)`);
+        document.body.style.setProperty("--page-Symbol", `var(--${currentMode}-Symbol)`);
+        document.body.style.setProperty("--page-Particle", `var(--${currentMode}-Particle)`);
+        document.body.style.setProperty("--page-UNKNOWN", `var(--${currentMode}-UNKNOWN)`);
+    }
+
     </script>
     
 {% endblock %}
@@ -102,7 +191,7 @@
     <br><br>
     <div class="wrappercomment">
         {% block footer %}
-        <p style="color:#888; font-size:10px;">Generated from user-provided content automatically by: <a style="color:#aaa" href="https://koreaninterlinear.herokuapp.com/">Korean-English Interlinear Generator</a>. Software copyright &copy;2020 by <a style="color:#aaa" href="https://github.com/danjclegg/korean-english-interlinear">Dan Clegg</a>, released under <a style="color:#aaa" href="https://github.com/danjclegg/korean-english-interlinear/blob/main/LICENSE">GNU General Public License v3.0</a>. No rights are claimed on the generated interlinear plain text, some are held by authors of packages such as KEngDic. No responsibility taken for contents of such dictionaries, for output, or for supplied input. See source files for more. No liability assumed for use of this program or output, see licence at link above. By supplying content user agrees they hold appropriate copyright to do so.</p>
+        <p style="color: var(--page-Comment); font-size:10px;">Generated from user-provided content automatically by: <a style="color: var(--page-Noun);" href="https://koreaninterlinear.herokuapp.com/">Korean-English Interlinear Generator</a>. Software copyright &copy;2020 by <a style="color: var(--page-Noun);" href="https://github.com/danjclegg/korean-english-interlinear">Dan Clegg</a>, released under <a style="color: var(--page-Noun);" href="https://github.com/danjclegg/korean-english-interlinear/blob/main/LICENSE">GNU General Public License v3.0</a>. No rights are claimed on the generated interlinear plain text, some are held by authors of packages such as KEngDic. No responsibility taken for contents of such dictionaries, for output, or for supplied input. See source files for more. No liability assumed for use of this program or output, see licence at link above. By supplying content user agrees they hold appropriate copyright to do so.</p>
         {% endblock %}
     </div>
     <div>
