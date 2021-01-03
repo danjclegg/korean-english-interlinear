@@ -9,6 +9,8 @@ from soylemma import Lemmatizer
 import sejongtagset 
 import kogrammarlinks
 import mecablight
+from hangul_romanize import Transliter
+from hangul_romanize.rule import academic
 
 # from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging
 
@@ -28,6 +30,8 @@ class KoInterlinear:
 
         self.mecab = mecablight.MeCabLight()
         self.lemmatizer = Lemmatizer()
+
+        self.transliterator = Transliter(academic)
 
         self.kogrammarlinks = kogrammarlinks.KoGrammarLinks()
 
@@ -431,16 +435,6 @@ class KoInterlinear:
         # example: branch = [('“', 'SSO'), ('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
         non_symbol_branch = self.get_plain_branch(branch)
         plain_word = self.get_plain_word(branch)
-        
-        #fix this:
-        if plain_word == "":
-            if sum([1 for x in non_symbol_branch]) > 0:
-                print("Warning, plain word is empty, printing branch: ")
-                print(branch)
-
-
-
-
 
         full_word = "".join([   (   "<span style='color: var(--page-" +
                                     self.get_sejongtagset_superclass(x[1]) + ");'>" +
@@ -449,6 +443,8 @@ class KoInterlinear:
                                 ) for x in branch
                             ])
         full_word_length = sum(len(x[0]) for x in branch)
+
+        transliteration = html.escape(self.transliterator.translit(plain_word))
 
         naverlink = ('<p><a title="Naver" class=diclink target="_blank" '
                     + 'rel="noopener noreferrer" href="' 
@@ -474,8 +470,7 @@ class KoInterlinear:
                                         self.get_sejongtagset_name(x[1]) +
                                         "</span>"
                                     ) for x in non_symbol_branch ])
-        
-        
+                
         hr = '<hr style="width:80%;text-align:left;margin-left:0;height:1px;border-width:0;color: var(--page-Border);background-color:var(--page-Border);">'
         grammarlink_matches = self.kogrammarlinks.search(branch, nextbranch)
         grammarlink_matches_html = ''
@@ -534,7 +529,8 @@ class KoInterlinear:
                     + phrase_translations_html_short
                     + "</p>")
 
-        tooltip = ( naverlink + daumlink1 + daumlink2
+        tooltip = ( transliteration + hr
+                    + naverlink + daumlink1 + daumlink2
                     + hr + '<p style="margin-top: .5em;">'
                     + f'{pos_info_long}</p>'
                     + translations_html
