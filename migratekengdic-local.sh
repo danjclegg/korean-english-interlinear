@@ -51,6 +51,9 @@ CREATE INDEX korean_english_wordkey ON korean_english(word);
 create index korean_english_phrase2wordkey on korean_english_phrase2word(word1, word2);
 create index korean_english_phrases3wordkey on korean_english_phrase3word(word1, word2, word3);
 
+delete from korean_english where def ~ 'fuck|cunt|slut|whore|bitch|n\wg\w\wr|N\wg\w\wr';
+delete from korean_english where word ~ '정신박약아|정신박약자|지진아';
+
 \di
 
 EOF

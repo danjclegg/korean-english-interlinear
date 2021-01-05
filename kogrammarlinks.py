@@ -23,33 +23,40 @@ class KoGrammarLinks:
         self.particleclasses = ['EC', 'EF', 'EP', 'ETM', 'ETN', 'JC', 'JKB', 'JKC', 'JKG', 'JKO', 'JKQ', 'JKS', 'JKV', 'JX', 'XPN', 'XR', 'XSA', 'XSN', 'XSV']
 
         #supplementary list of basic particles
-        self.ninetydaykoreanlinks = {
-            '~은 (Subject/Topic)':		'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic',
-            '~는 (Subject/Topic)':		'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic',
-            '~이 (Subject)': 			'https://www.90daykorean.com/korean-particles/#-i-ga-subject',
-            '~가 (Subject)': 			'https://www.90daykorean.com/korean-particles/#-i-ga-subject',
-            '~을 (Object)': 				'https://www.90daykorean.com/korean-particles/#-eulreul-object',
-            '~를 (Object)': 				'https://www.90daykorean.com/korean-particles/#-eulreul-object',
-            '~에 (Time/Location)': 		'https://www.90daykorean.com/korean-particles/#-e-timelocation',
-            '~에서 (Location)': 			'https://www.90daykorean.com/korean-particles/#-eseo-location',
-            '~께 (To give)':		        'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something',
-            '~에게 (To give)':		    'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something',
-            '~한테 (To give)':		    'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something',
-            '~께서 (To receive)': 	    'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone',
-            '~에서 (To receive)':        'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone',
-            '~한테서 (To receive)': 	    'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone',
-            '~도 (Also)': 				'https://www.90daykorean.com/korean-particles/#-do-also',
-            '~(으)로 (Direction etc.)':	'https://www.90daykorean.com/korean-particles/#-euroro-direction-and-multiple-other-meanings',
-            '~부터 (Start)': 			'https://www.90daykorean.com/korean-particles/#-buteo-start',
-            '~까지 (Until)': 			'https://www.90daykorean.com/korean-particles/#-kkaji-until',
-            '~들 (Plural)': 			    'https://www.90daykorean.com/korean-particles/#-deul-plural',
-            '~만 (Only)': 				'https://www.90daykorean.com/korean-particles/#-man-only',
-            '~의 (Possessive)': 			'https://www.90daykorean.com/korean-particles/#-ui-possessive',
-            '~과 (and/with/as with)': 	'https://www.90daykorean.com/korean-particles/#-gwawa-andwithas-with',
-            '~와 (and/with/as with)': 	'https://www.90daykorean.com/korean-particles/#-gwawa-andwithas-with',
-            '~(이)랑 (and/with/as with)':'https://www.90daykorean.com/korean-particles/#-irangrang-andwithas-with',
-            '~하고 (and/with/as with)': 	'https://www.90daykorean.com/korean-particles/#-hago-andwithas-with',
-            '~고 (connective)': 			'https://www.90daykorean.com/korean-particles/#-go-connective'
+        self.supplementary_grammar_links = {
+            '~은':('Subject/Topic', '9DK', 'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic'),
+            '~는':('Subject/Topic', '9DK', 'https://www.90daykorean.com/korean-particles/#-eun-neun-subjecttopic'),
+            '~이':('Subject', '9DK', 'https://www.90daykorean.com/korean-particles/#-i-ga-subject'),
+            '~가':('Subject', '9DK', 'https://www.90daykorean.com/korean-particles/#-i-ga-subject'),
+            '~을':('Object', '9DK', 'https://www.90daykorean.com/korean-particles/#-eulreul-object'),
+            '~를':('Object', '9DK', 'https://www.90daykorean.com/korean-particles/#-eulreul-object'),
+            '~에':('Time/Location', '9DK', 'https://www.90daykorean.com/korean-particles/#-e-timelocation'),
+            '~에서':('Location', '9DK', 'https://www.90daykorean.com/korean-particles/#-eseo-location'),
+            '~께':('To give', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something'),
+            '~에게':('To give', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something'),
+            '~한테':('To give', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeegehante-to-give-someone-something'),
+            '~께서':('To receive', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone'),
+            '~에서':('To receive', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone'),
+            '~한테서':('To receive', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkeseoeseohanteseo-to-receive-something-from-someone'),
+            '~도': ('Also', '9DK', 'https://www.90daykorean.com/korean-particles/#-do-also'),
+            '~(으)로': ('Direction etc.', '9DK', 'https://www.90daykorean.com/korean-particles/#-euroro-direction-and-multiple-other-meanings'),
+            '~부터': ('Start', '9DK', 'https://www.90daykorean.com/korean-particles/#-buteo-start'),
+            '~까지': ('Until', '9DK', 'https://www.90daykorean.com/korean-particles/#-kkaji-until'),
+            '~들': ('Plural', '9DK', 'https://www.90daykorean.com/korean-particles/#-deul-plural'),
+            '~만': ('Only', '9DK', 'https://www.90daykorean.com/korean-particles/#-man-only'),
+            '~의': ('Possessive/\'s', '9DK', 'https://www.90daykorean.com/korean-particles/#-ui-possessive'),
+            '~과': ('and/with/as with', '9DK', 'https://www.90daykorean.com/korean-particles/#-gwawa-andwithas-with'),
+            '~와': ('and/with/as with', '9DK', 'https://www.90daykorean.com/korean-particles/#-gwawa-andwithas-with'),
+            '~(이)랑': ('and/with/as with', '9DK', 'https://www.90daykorean.com/korean-particles/#-irangrang-andwithas-with'),
+            '~하고': ('and/with/as with', '9DK', 'https://www.90daykorean.com/korean-particles/#-hago-andwithas-with'),
+            '~고': ('connective', '9DK', 'https://www.90daykorean.com/korean-particles/#-go-connective'),
+            '-(으)면': ('if/when -, then', 'DAN', '#'),
+            '-던': ('- was', 'DAN', '#'),
+            '-에게': ('to/w.r.t. -', 'DAN', '#'),
+            '~(으)며': ('while', 'STK', 'https://korean.stackexchange.com/questions/2628/when-would-i-use-%EB%A9%B4%EC%84%9C-vs-%EB%A9%B0'),
+            '~(으)면서': ('concurrently', 'STK', 'https://korean.stackexchange.com/questions/2628/when-would-i-use-%EB%A9%B4%EC%84%9C-vs-%EB%A9%B0'),
+            '-서': ('so/so as to', 'HAD', 'https://hanguladay.com/2009/01/24/verbs-in-infinitive-and-particle-%EC%84%9C/'),
+            '-(으)세': ('lets -', 'KGF', 'http://koreangrammaticalforms.com/entry.php?eid=0000001335')
         }
 
     #to be used manually only to cache links for lookup by rest of this class
@@ -94,9 +101,9 @@ class KoGrammarLinks:
 
     def supplementary_matches_search(self, pattern):
         matches = []
-        for key in self.ninetydaykoreanlinks:
+        for key in self.supplementary_grammar_links:
             if re.match(pattern, key) is not None:
-                matches.append(("9DK: " + key, self.ninetydaykoreanlinks[key]))
+                matches.append((self.supplementary_grammar_links[key][1] + ": " + key + " " + self.supplementary_grammar_links[key][0], self.supplementary_grammar_links[key][2]))
         return matches
 
 
@@ -153,32 +160,33 @@ class KoGrammarLinks:
                 #print(priorchar_final)
                 if priorchar_final != '':
                     pattern = pattern + '(?:' + re.escape(priorchar_final) + '\s*)?'
-                pattern = pattern + '(?:\(' + re.escape(priorchar) + '\))?\s*'
-                suppattern = suppattern + '(?:\(' + re.escape(priorchar) + '\))?\s*'
+                #pattern = pattern + '(?:\(' + re.escape(priorchar) + '\))?\s*'
+                #suppattern = suppattern + '(?:\(' + re.escape(priorchar) + '\))?\s*'
+
+            pattern = pattern + '(?:\(\w\))?\s*'
+            suppattern = suppattern + '(?:\(\w\))?\s*'
 
             pattern = pattern + re.escape(endingscombinedcut) 
             suppattern = suppattern + re.escape(endingscombinedcut) 
             
             # pattern is matching bracketed trailing characters
-            pattern = pattern + '(?:\(?[요는를은을]\)?)?[0-9]?(?:\s+|$)'
-            
-            # suppattern is matching bracketed translations so can be separated by 
-            # whitespace at beginning here
-            suppattern = suppattern + '\s*(?:\([^\)]*\))?'
+            pattern = pattern + '(?:\([요는를은을]\))?[0-9]?(?:\s+|$)'
             
             if nextbranch != None and nextbranch and len(nextbranch[0]) > 0:
                 # then must also match next word 
                 # or also any character other than a korean character
                 nextmorph = nextbranch[0][0]
-                pattern = pattern + '(?:' + re.escape(nextmorph) + '.*$|[a-zA-Z0-9].*$|\s*$)'
+                pattern = pattern + '(?:' + re.escape(nextmorph) + '.*$|\s*$)'
+                #to include english text trailing add this to above: |[a-zA-Z0-9].*$|
             else:
                 # then must match end as no later word
-                pattern = pattern + '(?:[a-zA-Z0-9].*$|\s*$)'
-            suppattern = suppattern + '\s*$'
+                pattern = pattern + '\s*$'
+                #to include english text trailing add this to above: |[a-zA-Z0-9].*$|
+            suppattern = suppattern + '$'
             
-            grammarlinks = self.matches_search(pattern)
+            grammarlinks = self.supplementary_matches_search(suppattern)
             #print(len(grammarlinks))
-            grammarlinks.extend(self.supplementary_matches_search(suppattern))
+            grammarlinks.extend(self.matches_search(pattern))
             #print(len(grammarlinks))                    
          
             if grammarlinks:
@@ -228,9 +236,6 @@ class KoGrammarLinks:
                 if not hit_a_symbol and nextbranch != None and nextbranch and len(nextbranch[0]) > 0:
                     nextmorph_text = nextbranch[0][0]
                 
-                #print("branch i; particle, preceeding_char, preceeding_char_final, hit_a_symbol, last_morph_index, remaining_morphs, nextmorph_text, nextbranch")
-                #print(str(branch) + " " + str(i) + "\t" + str(particle) + "\t" + str(preceeding_char) + "\t" + str(preceeding_char_final) + "\t" + str(hit_a_symbol) + "\t'" + str(last_morph_index) + "'\t'" + str(remaining_morphs) + "'\t'" + str(nextmorph_text) + "'\t" + str(nextbranch))
-                
                 pattern = '^\s*'
                 # pattern for supplementary links
                 suppattern = '^'
@@ -240,8 +245,11 @@ class KoGrammarLinks:
                     suppattern = suppattern + '[-~]?\s*'
                     if preceeding_char_final != '':
                         pattern = pattern + '(?:' + re.escape(preceeding_char_final) + '\s*)?'
-                    pattern = pattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
-                    suppattern = suppattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
+                    #pattern = pattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
+                    #suppattern = suppattern + '(?:\(' + re.escape(preceeding_char) + '\))?\s*'
+             
+                pattern = pattern + '(?:\(\w\))?\s*'
+                suppattern = suppattern + '(?:\(\w\))?\s*'
 
                 pattern = pattern + re.escape(particle) 
                 suppattern = suppattern + re.escape(particle) 
@@ -252,28 +260,30 @@ class KoGrammarLinks:
                     suppattern = suppattern + '(?:\(?' + re.escape(remaining_morphs_text) + '\)?)?'
                 
                 # matching bracketed trailing characters 
-                pattern = pattern + '(?:\(?[요는를은을다가요이]\)?)?[0-9]?(?:\s+|$)'
-                
-                # matching bracketed translations so can be separated by 
-                # whitespace at beginning here
-                suppattern = suppattern + '\s*(?:\([^\)]*\))?'
+                pattern = pattern + '(?:\([요는를은을요이]\))?[0-9]?(?:\s+|$)'
                 
                 if nextmorph_text != "":
                     # then must also match next word 
-                    # or also any character other than a korean character
-                    pattern = pattern + '(?:' + re.escape(nextmorph_text) + '.*$|[a-zA-Z0-9].*$|\s*$)'
+                    pattern = pattern + '(?:' + re.escape(nextmorph_text) + '.*$|\s*$)'
+                    #to include english text trailing add this to above: |[a-zA-Z0-9].*$|
                 else:
                     # then must match end as no later word
-                    pattern = pattern + '(?:[a-zA-Z0-9].*$|\s*$)'
-                suppattern = suppattern + '\s*$'
+                    pattern = pattern + '\s*$'
+                    #to include english text trailing add this to above: |[a-zA-Z0-9].*$|
+                suppattern = suppattern + '$'
                 
                 #print(pattern)
                 #print(suppattern)
 
-                grammarlinks.extend(self.matches_search(pattern))
-                #print(len(grammarlinks))
                 grammarlinks.extend(self.supplementary_matches_search(suppattern))
                 #print(len(grammarlinks))                    
+                grammarlinks.extend(self.matches_search(pattern))
+                #print(len(grammarlinks))
+                
+                #if particle == "면":
+                    #print("branch i; particle, preceeding_char, preceeding_char_final, hit_a_symbol, last_morph_index, remaining_morphs, nextmorph_text, nextbranch")
+                    #print(str(branch) + " " + str(i) + "\t" + str(particle) + "\t" + str(preceeding_char) + "\t" + str(preceeding_char_final) + "\t" + str(hit_a_symbol) + "\t'" + str(last_morph_index) + "'\t'" + str(remaining_morphs) + "'\t'" + str(nextmorph_text) + "'\t" + str(nextbranch))
+                    
         #print(grammarlinks)    
         return grammarlinks
 

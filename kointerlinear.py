@@ -35,7 +35,7 @@ class KoInterlinear:
 
         self.kogrammarlinks = kogrammarlinks.KoGrammarLinks()
 
-        self.missing_words = []
+        #self.missing_words = []
 
         self.particle_classes = ['E', 'J', 'S', 'X']
 
@@ -44,41 +44,7 @@ class KoInterlinear:
 
         self.cur = self.con.cursor()
 
-        # sql code to create another table like the main one, this taken from KEngDic:
-        create_added_table = """CREATE TABLE korean_english_added (
-            id SERIAL PRIMARY KEY,
-            wordid integer,
-            word character varying(130),
-            syn character varying(190),
-            def text,
-            posn integer,
-            pos character varying(13),
-            submitter character varying(25),
-            doe timestamp without time zone,
-            wordsize smallint,
-            hanja character varying,
-            wordid2 integer,
-            extradata character varying
-        );"""
 
-        self.cur.execute("select * from information_schema.tables where table_name=%s", ('korean_english',))
-        if not bool(self.cur.rowcount):
-            Exception("Error, database dictionary table missing or not set up.")
-            
-
-        self.cur.execute("select * from information_schema.tables where table_name=%s", ('korean_english_added',))
-        if not bool(self.cur.rowcount):
-            self.cur.execute(create_added_table)
-            self.cur.close()
-            self.con.commit()
-            self.cur = self.con.cursor()
-            self.cur.execute("select * from information_schema.tables where table_name=%s", ('korean_english_added',))
-            if not bool(self.cur.rowcount):
-                Exception("Error, database added dictionary table missing or not set up.")
-
-    ######################
-    # Function defs
-    
     def get_sejongtagset_name(self, tag):
         tag = tag.split("+")[0]  # go with first tag if multiple
         if tag in sejongtagset.SejongTagset:
@@ -371,6 +337,25 @@ class KoInterlinear:
                                 ) for x in branch
                             ])
                                 
+                                
+    def end_of_sentence_punc(self, word):
+        for morph in word:
+            if len(morph) > 1 and len(morph[1]) > 0 and morph[1][0] == 'S' and ("." in morph[0] or "?" in morph[0] or "!" in morph[0]):
+                return True
+        return False
+        
+    def passage_trans_link(self, passage):
+        if passage and passage[0] and type(passage[0][0]) is tuple:
+            link = "https://papago.naver.com/?sk=ko&tk=en&st=" + urllib.parse.quote(
+                        " ".join(
+                            "".join(tup[0] for tup in twig)
+                            for twig in passage)
+                        )
+            self.xprint('    <li>')
+            self.xprint('      <ol class=comment>')
+            self.xprint(f'        <li lang=es><a title="Papago line translation" class=translink target="_blank" rel="noopener noreferrer" href="{link}">{self.pointer_char}</a></li>')
+            self.xprint('      </ol>')
+            self.xprint('    </li>')
 
     def format_passage(self, passage):
         #print("call on: ")
@@ -385,6 +370,10 @@ class KoInterlinear:
                     self.xprint('    <ol class=sentence>')
                     
                     lenpassage = len(passage)
+                    
+                    #use this to track where found end of sentence punctuations
+                    laststartingpoint = 0
+                    
                     for i in range(0, lenpassage):
                         # grab the word we're working on and also the following words 
                         # for various matching purposes
@@ -393,20 +382,12 @@ class KoInterlinear:
                         nextnextword = passage[i + 2] if i < lenpassage - 1 - 1 else None
                         
                         self.format_word(word, nextword, nextnextword)
-                    
-                    # check if this was a list of lists of tuples (a sentence)
-                    # and add sentence translate link if so
-                    if type(passage[0][0]) is tuple:
-                        link = "https://papago.naver.com/?sk=ko&tk=en&st=" + urllib.parse.quote(
-                                    " ".join(
-                                        "".join(tup[0] for tup in twig)
-                                        for twig in passage)
-                                    )
-                        self.xprint('    <li>')
-                        self.xprint('      <ol class=comment>')
-                        self.xprint(f'        <li lang=es><a title="Papago line translation" class=translink target="_blank" rel="noopener noreferrer" href="{link}">{self.pointer_char}</a></li>')
-                        self.xprint('      </ol>')
-                        self.xprint('    </li>')
+                        
+                        # print the passage translation if we're at 
+                        # end of a sentence or end of the passage
+                        if i == lenpassage - 1 or (i > 0 and self.end_of_sentence_punc(word)):
+                            self.passage_trans_link(passage[laststartingpoint:i + 1])
+                            laststartingpoint = i + 1
 
                     self.xprint('    </ol>')
                     self.xprint('</div>')
@@ -444,7 +425,7 @@ class KoInterlinear:
                             ])
         full_word_length = sum(len(x[0]) for x in branch)
 
-        transliteration = html.escape(self.transliterator.translit(plain_word))
+        transliteration = '<p style="color: var(--page-InterInfo)">' + html.escape(self.transliterator.translit(plain_word)) + "</p>"
 
         naverlink = ('<p><a title="Naver" class=diclink target="_blank" '
                     + 'rel="noopener noreferrer" href="' 
@@ -556,7 +537,7 @@ class KoInterlinear:
 
     def generate(self):
         structured_content = []
-        # to catch warnings to deal with
+        
         for j in range(len(self.content)):
             line = self.content[j]
             if line == "":

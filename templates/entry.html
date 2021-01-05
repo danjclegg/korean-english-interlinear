@@ -36,16 +36,18 @@
     </div>
     
     <div class="wrappercomment">
-    <h4>Notes</h4>
+    <p style="margin-bottom: .5em;">
+        Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear). This offers insights into the language that full-sentence translation obscures. It supplies extra contextual information in clickable pop-up boxes. The generated pages are self-contained files ideal for saving for offline reading. 
+    </p>    
     <p>
-        Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear) and supplies extra contextual information in clickable pop-up boxes. The literal translation offers insights into the Korean language that full-sentence translation obscures. The generated pages are self-contained files ideal for saving for offline reading. As it uses simple dictionary look-ups, the translations are only possibilities.
+        As it uses simple public dictionary look-ups, the translations are only possibilities. Please <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://github.com/danjclegg/korean-english-interlinear/issues">advise me</a> of any offensive content in these dictionaries so I can filter it out.
     </p>
     </div>
     
     <div class="wrappercomment">  
         <form role="form" method='POST' action='/generate'>
             <h4>Enter Text</h4>
-            <p>Type or paste Korean to generate interlinear. Max: 5000 characters / ~1600 words. Lines starting with # are treated as untranslated comments. Tip: break up paragraphs into shorter passages as each paragraph is also linked individually to an external full paragraph translation for reference.</p>
+            <p>Type or paste Korean below (max ~1600 words). Lines starting with # are treated as untranslated comments.</p>
             <p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
             <p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
         </form>
@@ -65,33 +67,16 @@
     </div>
     
     <div class="wrappercomment">
-    <h4 style="margin-bottom: .5em;">Sample Text</h4>
+    <h4 style="margin-bottom: .5em;">Korean Texts</h4>
     <p style="margin-bottom: .5em;">
-    Check out this great book, <a style="color: var(--page-Particle);" href="https://open.umn.edu/opentextbooks/textbooks/422">Korean Through Folktales</a>, for text at different reading levels. You can also copy and paste from the sample text below:<br>
-    <br>
-    </p>
-    <p style="margin-bottom: .5em;">#애국가 - Korean National Anthem</p>
-    <p style="margin-bottom: .5em;">
-    동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세
-    </p>
-    <p style="margin-bottom: .5em;">
-    남산 위에 저 소나무 철갑을 두른 듯바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세
-    </p>
-    <p style="margin-bottom: .5em;">
-    가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세
-    </p>
-    <p style="margin-bottom: .5em;">
-    이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세
-    </p>
-    <p style="margin-bottom: .5em;">
-    # The above sample from https://search.naver.com/search.naver? sm=tab_sug.top &where=nexearch &query=%EC%95%A0%EA%B5%AD%EA%B0%80+%EA%B0%80%EC%82%AC &oquery=thskrl &tqi=UJW6FlprvTVsssmd1UNssssstoZ-093930 &acq=dornrrk &acr=1 &qdt=0
-    </p>
+    <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://open.umn.edu/opentextbooks/textbooks/422">Korean Through Folktales</a> has text at different reading levels.<br>
+    Here is the <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://search.naver.com/search.naver?%20sm=tab_sug.top%20&where=nexearch%20&query=%EC%95%A0%EA%B5%AD%EA%B0%80+%EA%B0%80%EC%82%AC%20&oquery=thskrl%20&tqi=UJW6FlprvTVsssmd1UNssssstoZ-093930%20&acq=dornrrk%20&acr=1%20&qdt=0">Korean National Anthem</a>.<br>
+    Here is a <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="http://18children.president.pa.go.kr/mobile/our_space/fairy_tales.php">collection of folktales</a> you might want to read.
     </div>
-    
     <div class="wrappercomment">
     <h4>More Information</h4>
     <p>
-    Check out the <a style="color: var(--page-Particle);" href="https://github.com/danjclegg/korean-english-interlinear">github page</a> for more technical information on the program. See footer for license and disclaimer.
+    Check out the <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://github.com/danjclegg/korean-english-interlinear">github page</a> for more technical information on the program. See footer for license and disclaimer.
     </p>
     </div>
 {% endblock %}
