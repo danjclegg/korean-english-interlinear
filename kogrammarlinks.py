@@ -300,9 +300,10 @@ class KoGrammarLinks:
         grammarlinks = self.search_word_method1(branch, nextbranch)
         #if grammarlinks:
             #print("*********************found grammarlinks with fallback***********************************")
-            #if branch == [('재산', 'NNG'), ('으로', 'JKB')]:
-            #    from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging
+            ##if branch == [('재산', 'NNG'), ('으로', 'JKB')]:
+               ##from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging
             #print(branch)
+            #print(grammarlinks)
         
         return grammarlinks
 

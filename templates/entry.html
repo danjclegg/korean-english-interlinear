@@ -46,9 +46,7 @@
     
     <div class="wrappercomment">  
         <form role="form" method='POST' action='/generate'>
-            <h4>Enter Text</h4>
-            <p>Type or paste Korean below (max ~1600 words). Lines starting with # are treated as untranslated comments.</p>
-            <p><textarea class="form-control" placeholder = "" name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
+            <p><textarea autofocus class="form-control" placeholder="Type or paste Korean text here. &#13;&#10;Maximum ~1600 words. &#13;&#10;&#35;Use hashtag for comment lines." name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
             <p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
         </form>
         <script type="text/javascript">

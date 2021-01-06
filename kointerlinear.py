@@ -344,6 +344,7 @@ class KoInterlinear:
                 return True
         return False
         
+        
     def passage_trans_link(self, passage):
         if passage and passage[0] and type(passage[0][0]) is tuple:
             link = "https://papago.naver.com/?sk=ko&tk=en&st=" + urllib.parse.quote(
@@ -351,11 +352,12 @@ class KoInterlinear:
                             "".join(tup[0] for tup in twig)
                             for twig in passage)
                         )
-            self.xprint('    <li>')
-            self.xprint('      <ol class=comment>')
-            self.xprint(f'        <li lang=es><a title="Papago line translation" class=translink target="_blank" rel="noopener noreferrer" href="{link}">{self.pointer_char}</a></li>')
-            self.xprint('      </ol>')
-            self.xprint('    </li>')
+            #self.xprint('    <li>')
+            #self.xprint('      <ol class=comment>')
+            #self.xprint(f'        <li lang=es><a title="Papago line translation" class=translink target="_blank" rel="noopener noreferrer" href="{link}">{self.pointer_char}</a></li>')
+            #self.xprint('      </ol>')
+            #self.xprint('    </li>')
+            return f'<a title="passage translation" class=translink target="_blank" rel="noopener noreferrer" href="{link}">{self.pointer_char}</a>'
 
     def format_passage(self, passage):
         #print("call on: ")
@@ -381,13 +383,15 @@ class KoInterlinear:
                         nextword = passage[i + 1] if i < lenpassage - 1 else None
                         nextnextword = passage[i + 2] if i < lenpassage - 1 - 1 else None
                         
-                        self.format_word(word, nextword, nextnextword)
-                        
                         # print the passage translation if we're at 
                         # end of a sentence or end of the passage
                         if i == lenpassage - 1 or (i > 0 and self.end_of_sentence_punc(word)):
-                            self.passage_trans_link(passage[laststartingpoint:i + 1])
+                            trans_link_passage = passage[laststartingpoint:i + 1]
                             laststartingpoint = i + 1
+                        else:
+                            trans_link_passage = None
+                        
+                        self.format_word(word, nextword, nextnextword, trans_link_passage)
 
                     self.xprint('    </ol>')
                     self.xprint('</div>')
@@ -412,7 +416,7 @@ class KoInterlinear:
             print("error, expected list or str, got something else")
     
 
-    def format_word(self, branch, nextbranch = None, nextnextbranch = None):
+    def format_word(self, branch, nextbranch = None, nextnextbranch = None, trans_link_passage = None):
         # example: branch = [('“', 'SSO'), ('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
         non_symbol_branch = self.get_plain_branch(branch)
         plain_word = self.get_plain_word(branch)
@@ -425,14 +429,14 @@ class KoInterlinear:
                             ])
         full_word_length = sum(len(x[0]) for x in branch)
 
-        transliteration = '<p style="color: var(--page-InterInfo)">' + html.escape(self.transliterator.translit(plain_word)) + "</p>"
+        transliteration = '<span style="color: var(--page-InterInfo)">' + html.escape(self.transliterator.translit(plain_word)) + "</span>"
 
-        naverlink = ('<p><a title="Naver" class=diclink target="_blank" '
+        naverlink = ('<a title="Naver" class=diclink target="_blank" '
                     + 'rel="noopener noreferrer" href="' 
                     + "https://en.dict.naver.com/#/search?query=" 
                     + urllib.parse.quote(plain_word) 
-                    + f'">Naver{self.pointer_char}</a></p>')
-        daumlink1 = ('<p><a title="Daum" class=diclink target="_blank" '
+                    + f'">Naver{self.pointer_char}</a><br>')
+        daumlink1 = ('<a title="Daum" class=diclink target="_blank" '
                     + 'rel="noopener noreferrer" href="' 
                     + "https://small.dic.daum.net/search.do?q=" 
                     + urllib.parse.quote(plain_word) + "&dic=eng"
@@ -441,7 +445,7 @@ class KoInterlinear:
                     + 'rel="noopener noreferrer" href="' 
                     + "https://small.dic.daum.net/search.do?q=" 
                     + urllib.parse.quote(plain_word) + "&dic=ee"
-                    + f'"> Phrases{self.pointer_char}</a></p>')
+                    + f'"> Phrases{self.pointer_char}</a>')
 
         pos_info = "-".join([self.get_sejongtagset_abbrev(x[1]) for x in non_symbol_branch])
         
@@ -452,23 +456,22 @@ class KoInterlinear:
                                         "</span>"
                                     ) for x in non_symbol_branch ])
                 
-        hr = '<hr style="width:80%;text-align:left;margin-left:0;height:1px;border-width:0;color: var(--page-Border);background-color:var(--page-Border);">'
         grammarlink_matches = self.kogrammarlinks.search(branch, nextbranch)
         grammarlink_matches_html = ''
         if grammarlink_matches:
-            grammarlink_matches_html = hr + '<p style="margin-top: .5em;">'
+            grammarlink_matches_html = '<hr><p>'
             #pos_info = pos_info + "﹡"        
             for grammarlink_match in grammarlink_matches:
                 gtext = html.escape(grammarlink_match[0])
                 glink = grammarlink_match[1]
                 grammarlink_matches_html = (grammarlink_matches_html
-                                            + '<p><a class=diclink target="_blank"' 
-                                            + f'rel="noopener noreferrer" href="{glink}">{gtext} {self.pointer_char}</a></p>')
+                                            + '<a class=diclink target="_blank"' 
+                                            + f' rel="noopener noreferrer" href="{glink}">{gtext} {self.pointer_char}</a><br>')
             grammarlink_matches_html = grammarlink_matches_html + '</p>'
         
         translations = self.get_translations(branch, nextbranch, nextnextbranch)
         if translations:
-            translations_html = (hr + '<p style="margin-top: .5em;">'
+            translations_html = ('<hr><p>'
                                 + html.escape(";\n".join(translations)) + '</p>')
         else:
             translations_html = ''
@@ -476,7 +479,7 @@ class KoInterlinear:
         phrase_translations = self.fetch_phrase_translations(plain_word, self.get_plain_word(nextbranch), self.get_plain_word(nextnextbranch))
         
         if phrase_translations:
-            phrase_translations_html = (hr + '<p style="margin-top: .5em;font-weight:bold;color: var(--page-Noun)">' + html.escape(";\n".join(phrase_translations)) + '</p>')
+            phrase_translations_html = ('<hr><p style="font-weight:bold;color: var(--page-Noun);">' + html.escape(";\n".join(phrase_translations)) + '</p>')
         else:
             phrase_translations_html = ''
 
@@ -488,7 +491,7 @@ class KoInterlinear:
             tshort_t = ";\n".join(phrase_translations)
             self.wrapper.max_lines = 2
             phrase_translations_html_short = (
-                      '<p style="margin-top: .5em;font-weight:bold;color: var(--page-Noun)">'
+                      '<p style="font-weight:bold;color: var(--page-Noun)">'
                       + html.escape(self.wrapper.fill(tshort_t)).replace("\n", "<BR>")
                       + '</p>'
                       )
@@ -503,25 +506,29 @@ class KoInterlinear:
                 ).replace("\n", "<BR>") #.replace(": ", ":&nbsp;")
         else:
             translations_html_short = "——"
-
-        description = ("<p>" + html.escape(pos_info) 
-                    + "</p><p style=\"margin-top: .5em;\">" 
+        
+        description = (html.escape(pos_info) 
+                    + "<p>" 
                     + translations_html_short
                     + phrase_translations_html_short
                     + "</p>")
 
-        tooltip = ( transliteration + hr
+        tooltip = ( transliteration + '<hr>'
                     + naverlink + daumlink1 + daumlink2
-                    + hr + '<p style="margin-top: .5em;">'
-                    + f'{pos_info_long}</p>'
+                    + '<hr><p>' + pos_info_long + '</p>'
                     + translations_html
                     + phrase_translations_html
                     + grammarlink_matches_html
                     ).replace("\n", "<br>")
 
+        if trans_link_passage:
+            trans_link_passage_html = "&nbsp;" + self.passage_trans_link(trans_link_passage)
+        else:
+            trans_link_passage_html = ""
+
         self.xprint('    <li>')
         self.xprint(f'      <ol class=word onclick="showtooltip(event, \'tipnumber{self.tipnumber}\')">')
-        self.xprint(f'        <li lang=es>{full_word}</li>')
+        self.xprint(f'        <li lang=es>{full_word}{trans_link_passage_html}</li>')
         self.xprint(f'        <li lang=en_MORPH class=tooltip>{description}<span class=tooltiptext id="tipnumber{self.tipnumber}">{tooltip}</span></li><br>')
         self.xprint('      </ol>')
         self.xprint('    </li>')
