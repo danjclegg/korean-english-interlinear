@@ -24,56 +24,42 @@
     :root {
         /* for light mode */
         --light-Background: #f0eada;
+        --light-Tooltip: #fbf9f5;
         --light-WordCell: #f8f6f2;
         --light-Border: #dddddd;
-        --light-Tooltip: #fbf9f5;
-        
-        --light-Comment: #7c888b;
         --light-Particle: #7c888b;
-        
+        --light-Comment: var(--light-Particle);
         --light-InterInfo: #aaaaaa;
-        --light-ForeignWord: #aaaaaa;
-        
+        --light-ForeignWord: var(--light-InterInfo);
         --light-Adverb: #a88c41;
-        
         --light-Noun: #43423f;
-        --light-Symbol: #43423f;
-        --light-CardinalNumber: #43423f;
-        --light-UNKNOWN: #43423f;
-        
+        --light-Symbol: var(--light-Noun);
+        --light-CardinalNumber: var(--light-Noun);
+        --light-UNKNOWN: var(--light-Noun);
         --light-Pronoun: #5ba195;
-        
         --light-Verb: #b75f37;
-        --light-Interjection: #b75f37;
-        
+        --light-Interjection: var(--light-Verb);
         --light-Determiner: #8da44d;
         
         /* for dark mode */
-        --dark-Background: #16110e;
-        --dark-WordCell: #040402;
-        --dark-Border: #181512;
-        --dark-Tooltip: #010000;
-        
-        --dark-Particle: #546263;
-        --dark-Comment: #546263;
-        
-        --dark-InterInfo: #3e3b38;
-        --dark-ForeignWord: #3e3b38;
-        
-        --dark-Adverb: #9c7b3b;
-        
-        --dark-Noun: #a8a190;
-        --dark-Symbol: #a8a190;
-        --dark-CardinalNumber: #a8a190;
-        --dark-UNKNOWN: #a8a190;
-        
-        --dark-Pronoun: #427e70;
-        
-        --dark-Verb: #aa4538;
-        --dark-Interjection: #aa4538;
-        
-        --dark-Determiner: #788d3a;
-        
+        --dark-Background: #232220;
+        --dark-Tooltip: var(--dark-Background);
+        --dark-WordCell: #2a2827;
+        --dark-Border: #3c3836;
+        --dark-Particle: #7c888b;
+        --dark-Comment: var(--dark-Particle);
+        --dark-InterInfo: #58524c;
+        --dark-ForeignWord: var(--dark-InterInfo);
+        --dark-Adverb: #a88c41;
+        --dark-Noun: #ebdab4;
+        --dark-Symbol: var(--dark-Noun);
+        --dark-CardinalNumber: var(--dark-Noun);
+        --dark-UNKNOWN: var(--dark-Noun);
+        --dark-Pronoun: #5ba195;
+        --dark-Verb: #b75f37;
+        --dark-Interjection: var(--dark-Verb);
+        --dark-Determiner: #8da44d;
+                
         /* select light mode */
         --page-Background: var(--light-Background);
         --page-WordCell: var(--light-WordCell);
