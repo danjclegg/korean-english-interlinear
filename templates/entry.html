@@ -6,6 +6,8 @@
             width:100%;
             margin-top: 5px;
             font-size: 12px;
+            color: var(--page-Noun);
+            background-color: var(--page-Tooltip);
         }
         h1 {
             margin: 0;
@@ -40,14 +42,24 @@
         Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear). This offers insights into the language that full-sentence translation obscures. It supplies extra contextual information in clickable pop-up boxes. The generated pages are self-contained files ideal for saving for offline reading. 
     </p>    
     <p>
-        As it uses simple public dictionary look-ups, the translations are only possibilities. Please <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://github.com/danjclegg/korean-english-interlinear/issues">advise me</a> of any offensive content in these dictionaries so I can filter it out.
+        As it uses simple public dictionary look-ups, the translations and grammar hints are only possibilities. The parts of speech highlighting of nouns, verbs, etc. is not always accurate either, so don't trust this automatic tool completely. Also, please <a style="color: var(--page-Particle);" target="_blank" rel="noopener noreferrer" href="https://github.com/danjclegg/korean-english-interlinear/issues">advise me</a> of any offensive content in these dictionaries so I can filter it out.
     </p>
     </div>
     
     <div class="wrappercomment">  
         <form role="form" method='POST' action='/generate'>
             <p><textarea autofocus class="form-control" placeholder="Type or paste Korean text here. &#13;&#10;Maximum ~1600 words. &#13;&#10;&#35;Use hashtag for comment lines." name="entry" id="entry" rows="20" cols="40" maxlength="5000"></textarea></p>
-            <p><input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)"></p>
+            <p>
+            <div style="float: left; padding-right: 8px;">
+            <input class="btn btn-default" id="butt" type="submit" value="Generate (click once and wait)">
+            </div>
+            <div style="float: left; margin-top: 4px;">
+            <input type="radio" id="light" name="mode" value="light" checked="checked" onclick="switch_theme('light');">
+            <label for="light">Light mode</label>
+            <input type="radio" id="dark" name="mode" value="dark" onclick="switch_theme('dark');">
+            <label for="dark">Dark mode</label>
+            </div>
+            </p>
         </form>
         <script type="text/javascript">
         var butt = document.getElementById('butt');
@@ -70,6 +82,14 @@
             else {
                 entry.value = "#A Brief Sample Message\n안녕하세요, 앱 개발자입니다. 저도 현재 한국어를 배우고 있는데요, 무료 한-영 행간 번역기를 찾을 수 없어 이렇게 직접 하나를 만들게 되었습니다. 이 앱이 여러분의 배움에도 도움이 되었으면 좋겠습니다.";
             }
+        }
+        
+        var darkradio = document.getElementById('dark');
+        if(darkradio.checked) {
+            switch_theme("dark");
+        }
+        else {
+            switch_theme("light");
         }
         
         </script>

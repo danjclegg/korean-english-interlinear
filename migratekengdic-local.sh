@@ -38,6 +38,8 @@ CREATE TABLE korean_english_phrase3word (
     def text
 );
 
+/*bug: the two lines below match multiple whitespace separating but don't split based on multiple whitespace, resulting in blank entries -- to fix later*/
+
 INSERT INTO korean_english_phrase2word (word1, word2, phrase, def) SELECT split_part(word, ' ', 1) AS word1, split_part(word, ' ', 2) AS word2, word AS phrase, def FROM korean_english WHERE word ~ '^\s*\w+\s+\w+\s*$';
 
 INSERT INTO korean_english_phrase3word (word1, word2, word3, phrase, def) SELECT split_part(word, ' ', 1) AS word1, split_part(word, ' ', 2) AS word2, split_part(word, ' ', 3) AS word3, word AS phrase, def FROM korean_english WHERE word ~ '^\s*\w+\s+\w+\s+\w+\s*$';

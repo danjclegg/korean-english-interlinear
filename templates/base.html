@@ -61,23 +61,23 @@
         --dark-Determiner: #8da44d;
                 
         /* select light mode */
-        --page-Background: var(--light-Background);
-        --page-WordCell: var(--light-WordCell);
-        --page-Border: var(--light-Border);
-        --page-Tooltip: var(--light-Tooltip);
-        --page-Comment: var(--light-Comment);
-        --page-InterInfo: var(--light-InterInfo);
-        --page-ForeignWord: var(--light-ForeignWord);
-        --page-Adverb: var(--light-Adverb);
-        --page-Noun: var(--light-Noun);
-        --page-Pronoun: var(--light-Pronoun);
-        --page-Verb: var(--light-Verb);
-        --page-CardinalNumber: var(--light-CardinalNumber);
-        --page-Determiner: var(--light-Determiner);
-        --page-Interjection: var(--light-Interjection);
-        --page-Symbol: var(--light-Symbol);
-        --page-Particle: var(--light-Particle);
-        --page-UNKNOWN: var(--light-UNKNOWN);
+        --page-Background: var(--{{ mode|safe }}-Background);
+        --page-WordCell: var(--{{ mode|safe }}-WordCell);
+        --page-Border: var(--{{ mode|safe }}-Border);
+        --page-Tooltip: var(--{{ mode|safe }}-Tooltip);
+        --page-Comment: var(--{{ mode|safe }}-Comment);
+        --page-InterInfo: var(--{{ mode|safe }}-InterInfo);
+        --page-ForeignWord: var(--{{ mode|safe }}-ForeignWord);
+        --page-Adverb: var(--{{ mode|safe }}-Adverb);
+        --page-Noun: var(--{{ mode|safe }}-Noun);
+        --page-Pronoun: var(--{{ mode|safe }}-Pronoun);
+        --page-Verb: var(--{{ mode|safe }}-Verb);
+        --page-CardinalNumber: var(--{{ mode|safe }}-CardinalNumber);
+        --page-Determiner: var(--{{ mode|safe }}-Determiner);
+        --page-Interjection: var(--{{ mode|safe }}-Interjection);
+        --page-Symbol: var(--{{ mode|safe }}-Symbol);
+        --page-Particle: var(--{{ mode|safe }}-Particle);
+        --page-UNKNOWN: var(--{{ mode|safe }}-UNKNOWN);
     }
     
     div,li,ol,p,pre,ul{
@@ -123,6 +123,7 @@
         float:left;
         border: 1px dotted var(--page-Border);
         display: inline-block;
+        color: var(--page-Noun);
     }
     
     hr {
@@ -167,14 +168,19 @@
         }
     }
     
-    currentMode = "light";
-    
-    function switch_theme() {
-        if(currentMode == "light") {
-            currentMode = "dark";
+    currentMode = "{{ mode|safe }}";
+        
+    function switch_theme(mode = "") {
+        if(mode == "light" || mode == "dark") {
+            currentMode = mode;
         }
         else {
-            currentMode = "light";
+            if(currentMode == "light") {
+                currentMode = "dark";
+            }
+            else {
+                currentMode = "light";
+            }
         }
         document.body.style.setProperty("--page-Background", `var(--${currentMode}-Background)`);
         document.body.style.setProperty("--page-WordCell", `var(--${currentMode}-WordCell)`);
@@ -195,13 +201,14 @@
         document.body.style.setProperty("--page-UNKNOWN", `var(--${currentMode}-UNKNOWN)`);
     }
 
+    
     </script>
     
 {% endblock %}
 {% block morehead %}    
 {% endblock %}    
 </head>
-<body{% block morebodytag %}{% endblock %}>
+<body {% block morebodytag %}{% endblock %}>
     {% block content %}{% endblock %}
     <br><br>
     <div class="wrappercomment">
