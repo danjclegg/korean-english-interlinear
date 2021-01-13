@@ -1,7 +1,5 @@
 # korean-english-interlinear
-Korean-English Interlinear Generator Web-App in Python
-
-This app is currently [deployed on Heroku](https://koreaninterlinear.herokuapp.com/).
+This page houses the source code for a [publicly available Korean-English Interlinear Generator Web-App](https://koreaninterlinear.herokuapp.com/).
 
 Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear) and supplies extra contextual information in clickable pop-up boxes. The literal translation offers insights into the Korean language that full-sentence translation obscures. The generated pages are self-contained files ideal for saving for offline reading. As it uses simple dictionary look-ups, the translations are only possibilities.
 
