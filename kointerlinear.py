@@ -449,7 +449,7 @@ class KoInterlinear:
             for glkey, gldef, glsource, gllink in grammarlink_matches:
                 if glsource == "KRDict search" or glsource == "KRDict" or glsource == "YUF":
                     grammarlink_matches_html = (grammarlink_matches_html
-                                            + '<a class=diclink onclick="particlesearch(\'' + glkey + '\'); return false;" href="#">' + html.escape(glkey + ' ' + gldef) + ' ' + self.pointer_char + '&nbsp;' + glsource + '</a><br>')
+                                            + '<a class=diclink onclick="particlesearch(\'' + glkey.lstrip("-~") + '\'); return false;" href="#">' + html.escape(glkey + ' ' + gldef) + ' ' + self.pointer_char + '&nbsp;' + glsource + '</a><br>')
                 else:
                     grammarlink_matches_html = (grammarlink_matches_html
                                                 + '<a class=diclink target="_blank" rel="noopener noreferrer" href="' + gllink + '">' + html.escape(glkey + ' ' + gldef) + ' ' + self.pointer_char + '&nbsp;' + glsource + '</a><br>')

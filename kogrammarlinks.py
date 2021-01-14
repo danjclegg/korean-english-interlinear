@@ -80,6 +80,7 @@ class KoGrammarLinks:
             ('-여', 'before, polite, cause, exceed', 'KRDict', ''),
             ('-지', 'deny -, prohibit -, contradict, confirming, place', 'KRDict', ''),
             ('-한', '-related person', 'KRDict', ''),
+            ('-진', '-a group', 'KRDict', ''),
             
             # following summaries written by Yufina88 on Reddit r/korean, 
             # further shortened by myself
@@ -222,6 +223,8 @@ class KoGrammarLinks:
         #particle we're focusing on here
         particle = branch[i][0]
         
+        #print(particle)
+        
         if trunc:
             #if we're asked to cut off head of this particle 
             if len(particle) > trunc:
@@ -310,10 +313,10 @@ class KoGrammarLinks:
         grammarlinks = []
         grammarlinks.extend(self.supplementary_matches_search(suppattern))
         #print(len(grammarlinks))                    
-        #grammarlinks.extend(self.matches_search(pattern))
+        grammarlinks.extend(self.matches_search(pattern))
         #print(len(grammarlinks))
         
-        ##if particle == "은":
+        #if particle == "은":
         #print("branch i; particle, preceeding_char, preceeding_char_final, hit_a_symbol, last_morph_index, remaining_morphs, nextmorph_text, nextbranch")
         #print(str(branch) + " " + str(i) + "\t" + str(particle) + "\t" + str(preceeding_char) + "\t" + str(preceeding_char_final) + "\t" + str(hit_a_symbol) + "\t'" + str(last_morph_index) + "'\t'" + str(remaining_morphs) + "'\t'" + str(nextmorph_text) + "'\t" + str(nextbranch))
         
@@ -339,6 +342,8 @@ class KoGrammarLinks:
         return unique
 
     def search(self, branch, nextbranch = None):
+        #print("call on kogrammarlinks.search: " + str(branch))
+        
         # input for branch and nextbranch are output elements of 
         # list of morphemes and POS from Konlpy/Mecab
         # example input: branch = [('“', 'SSO'), ('톱질', 'NNG'), ('하', 'XSV'), ('세', 'EC')]
@@ -347,7 +352,7 @@ class KoGrammarLinks:
         #go through each chunk of the branch
         for i in range(0, len(branch)):
             #check if chunk is particle
-            if len(branch[i]) > 1 and branch[i][1] in self.particleclasses:
+            if len(branch[i]) > 1 and branch[i][1][0:3] in self.particleclasses:
                 particle_grammarlinks = self.search_particle(i, branch, nextbranch, 0)
                 if particle_grammarlinks:
                     grammarlinks.extend(particle_grammarlinks)
