@@ -1,6 +1,5 @@
 #!/bin/bash
 source env/bin/activate
-export DATABASE_URL="postgresql://localhost/kenddic"
 
 export FLASK_APP=app.py
 export FLASK_ENV=development

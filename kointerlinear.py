@@ -1,6 +1,5 @@
 import html
 import urllib.parse
-import psycopg2
 import textwrap
 import json
 import urllib.request
@@ -11,6 +10,8 @@ import kogrammarlinks
 import mecablight
 from hangul_romanize import Transliter
 from hangul_romanize.rule import academic
+import sqlite3
+from sqlite3 import Error
 
 # from IPython import embed; embed()  # https://switowski.com/blog/ipython-debugging
 
@@ -72,7 +73,7 @@ class KoInterlinear:
 
 
     def get_trans_fetch(self, word, original_word):
-        self.cur.execute("SELECT word, def, extradata FROM korean_english WHERE word = %s ORDER BY extradata, wordid;", (word,))
+        self.cur.execute("SELECT word, def, extradata FROM korean_english WHERE word == ? ORDER BY extradata, wordid;", (word,))
         rows = self.cur.fetchall()
         if type(rows) is list and rows:
             return [( row[1] if word == original_word else
@@ -87,9 +88,9 @@ class KoInterlinear:
             if nextwordstr is None or nextwordstr == "":
                 Exception("fetch_phrase_translations sent None for word2.")
             if nextnextwordstr is not None and nextnextwordstr != "":
-                self.cur.execute("SELECT phrase, def AS trans FROM korean_english_phrase2word WHERE word1 = %s AND word2 = %s UNION SELECT phrase, def AS trans FROM korean_english_phrase3word WHERE word1 = %s AND word2 = %s AND word3 = %s;", (wordstr, nextwordstr, wordstr, nextwordstr, nextnextwordstr))
+                self.cur.execute("SELECT phrase, def AS trans FROM korean_english_phrase2word WHERE word1 == ? AND word2 == ? UNION ALL SELECT phrase, def AS trans FROM korean_english_phrase3word WHERE word1 == ? AND word2 == ? AND word3 == ?;", (wordstr, nextwordstr, wordstr, nextwordstr, nextnextwordstr))
             else:
-                self.cur.execute("SELECT phrase, def AS trans FROM korean_english_phrase2word WHERE word1 = %s AND word2 = %s;", (wordstr,nextwordstr))
+                self.cur.execute("SELECT phrase, def AS trans FROM korean_english_phrase2word WHERE word1 == ? AND word2 == ?;", (wordstr,nextwordstr))
         else:
             return []
         

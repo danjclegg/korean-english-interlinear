@@ -1,7 +1,21 @@
-flask==1.0.1
-dj-database-url==0.5.0
-gunicorn==20.0.4
+#first remove any old env directory
+#then create venv: python3 -m venv env
+#then activate: source env/bin/activate
+#can check active with pip list (should not be huge)
+#This file's usage: pip install -r requirements.txt
+
+#here's list of packages from old development, with old version numbers
+#flask==1.0.1
+#gunicorn==20.0.4
+#soylemma==0.2.0
+#korean==0.1.8
+#mecab-python3==1.0.3
+#hangul-romanize==0.1.0
+
+#and these are the newer version numbers from pip freeze (with dependencies removed, they'll come automatically and I don't care if they change)
+Flask==2.2.3
+gunicorn==20.1.0
+hangul-romanize==0.1.0
+mecab-python3==1.0.6
 soylemma==0.2.0
 korean==0.1.8
-mecab-python3==1.0.3
-hangul-romanize==0.1.0

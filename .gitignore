@@ -1,10 +1,12 @@
 __pycache__
 *.pyc
 env/
-db.sqlite3
 kengdic/
-buildnotes.txt
-profile.txt
-.profile/
 bugs.txt
-oldcode.py
+buildnotes.txt
+Dockerfile.ALPINEOLD
+
+kengdic.db-freshfromimport
+
+
+

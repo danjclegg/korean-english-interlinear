@@ -1,13 +1,16 @@
-import os
+#import os
 from flask import Flask, render_template, url_for, request, redirect
 app = Flask(__name__)
 from markupsafe import escape
-import psycopg2
 
 from kointerlinear import KoInterlinear
 import sejongtagset
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+import sqlite3
+from sqlite3 import Error
+
+
+DATABASE_URL = "kengdic.db"
 
 ##if __name__ == '__main__':
 #import os.path
@@ -18,10 +21,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
 def run_generator(entry):
-    if DATABASE_URL == "postgresql://localhost/kenddic":
-        con = psycopg2.connect(database="kengdic", user='', password='', host="localhost")
-    else:
-        con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    con = sqlite3.connect(DATABASE_URL)
 
     generator = KoInterlinear(entry, con)
     body = generator.generate()
