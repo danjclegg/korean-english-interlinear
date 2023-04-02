@@ -32,18 +32,24 @@ def run_generator(entry):
 
 @app.route('/generate',methods = ['POST', 'GET'])
 def login():
-    if request.method != 'POST':
-        return redirect(url_for('entry'))
+    #if request.method != 'POST':
+    #    return redirect(url_for('entry'))
     
-    entrylong = request.form['entry']
+    if request.method == 'POST':
+        entrylong = request.form['entry']
+    elif request.method == 'GET':
+        entrylong = request.args.get('entry')
+    else:
+        entrylong = ""
+    
     entry = (entrylong[:5200] + '...max length exceeded') if len(entrylong) > 5200 else entrylong    
     
     body = run_generator(entry)
 
-    if request.form['mode'] != "dark":
-        mode = "light"
-    else:
+    if request.form['mode'] != "light":
         mode = "dark"
+    else:
+        mode = "light"
     
     return render_template("generate.html", body = body, mode = mode)
 
@@ -52,6 +58,6 @@ def entry():
     #prime the dyno
     run_generator("저")
     
-    return render_template("entry.html", mode = "light")
+    return render_template("entry.html", mode = "dark")
 
 
