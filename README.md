@@ -1,5 +1,5 @@
 # korean-english-interlinear
-This page houses the source code for a [publicly available Korean-English Interlinear Generator Web-App](https://koreaninterlinear-xftg6poebq-uc.a.run.app/).
+This page houses the source code for a [publicly available Korean-English Interlinear Generator Web-App](https://koreaninterlinear-xftg6poebq-uw.a.run.app/).
 
 Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear) and supplies extra contextual information in clickable pop-up boxes. The literal translation offers insights into the Korean language that full-sentence translation obscures. The generated pages are self-contained files ideal for saving for offline reading. As it uses simple dictionary look-ups, the translations are only possibilities.
 
