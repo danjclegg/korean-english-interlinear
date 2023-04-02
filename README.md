@@ -1,9 +1,9 @@
 # korean-english-interlinear
-This page houses the source code for a [publicly available Korean-English Interlinear Generator Web-App](https://koreaninterlinear.herokuapp.com/).
+This page houses the source code for a [publicly available Korean-English Interlinear Generator Web-App](https://koreaninterlinear-xftg6poebq-uc.a.run.app/).
 
 Designed for learning Korean with any text you want, this program generates crude literal/direct/word-for-word English translations underneath Korean text (interlinear) and supplies extra contextual information in clickable pop-up boxes. The literal translation offers insights into the Korean language that full-sentence translation obscures. The generated pages are self-contained files ideal for saving for offline reading. As it uses simple dictionary look-ups, the translations are only possibilities.
 
-It is written in Python, using Flask and GUnicorn on an Alpine Linux docker which I've deployed as a [Heroku app](https://koreaninterlinear.herokuapp.com/). I have also written a simple Mecab-ko Python wrapper which may be of use others.
+It is written in Python, using Flask and GUnicorn on an Debian Linux docker which I've deployed as a [GCloud Run app](https://koreaninterlinear-xftg6poebq-uc.a.run.app/). I have also written a simple Mecab-ko Python wrapper which may be of use others.
 
 The core program has these dependencies:
 - [Mecab-ko](http://eunjeon.blogspot.kr/)--adaptation of Mecab; both engine and dictionary [Downloadable here](https://bitbucket.org/eunjeon/mecab-ko) following instructions for install in this [script](https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh) taken from this [site](https://konlpy.org/en/latest/install/) However, the extracted necesities here are done by the Dockerfile already.
